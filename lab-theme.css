@@ -1,0 +1,344 @@
+/* Instaflow Lab Theme - green science lab vibe */
+
+:root {
+  --lab-green: #14ff72;
+  --lab-emerald: #0bd25d;
+  --lab-neon: #00ff88;
+  --lab-gold: #e6c14a;
+  --lab-dark: #071b0f;
+  --lab-deep: #03140b;
+  --lab-cyan: #00d4ff; /* kept for subtle accents if needed */
+}
+
+body.lab-theme {
+  background: radial-gradient(1200px 800px at 20% -10%, rgba(20,255,114,0.2), transparent),
+              radial-gradient(1000px 900px at 120% 10%, rgba(0,255,136,0.15), transparent),
+              linear-gradient(180deg, var(--lab-dark) 0%, var(--lab-deep) 100%);
+  color: #e9ffee;
+}
+
+/* Brand text & primary accents */
+.logo-text {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  animation: titleShine 6s linear infinite !important;
+}
+
+.footer-logo-text,
+.highlight-text {
+  color: var(--lab-neon) !important;
+}
+
+.nav-link {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  animation: titleShine 6s linear infinite !important;
+}
+
+.footer-link {
+  color: var(--lab-neon) !important;
+}
+
+.hero-title .title-highlight,
+.feature-btn,
+.download-btn.android,
+.download-btn.guide,
+.pricing-btn,
+.guide-cta-btn,
+.faq-cta-btn {
+  background: linear-gradient(45deg, var(--lab-neon), var(--lab-gold)) !important;
+  color: #071b0f !important;
+}
+
+.feature-btn:hover,
+.download-btn.android:hover,
+.download-btn.guide:hover,
+.pricing-btn:hover,
+.guide-cta-btn:hover,
+.faq-cta-btn:hover {
+  background: linear-gradient(45deg, var(--lab-gold), var(--lab-neon)) !important;
+  box-shadow: 0 12px 35px rgba(20, 255, 114, 0.35) !important;
+}
+
+/* Primary CTA matches highlight gradient */
+.hero-btn.primary {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  animation: titleShine 6s linear infinite !important;
+  color: #071b0f !important;
+  border: none !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.hero-btn.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(20,255,114,0.45), 0 0 14px rgba(230,193,74,0.35) !important;
+}
+
+/* Setup (outline) button matches highlight gradient too */
+.hero-btn.outline {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  animation: titleShine 6s linear infinite !important;
+  color: #071b0f !important;
+  border: none !important;
+}
+
+.hero-btn.outline:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(20,255,114,0.45), 0 0 14px rgba(230,193,74,0.35) !important;
+}
+
+/* Glass panels and borders shift to green glow */
+.feature-showcase-item,
+.pricing-card,
+.faq-item,
+.download-container,
+.guide-step,
+.modal {
+  border-color: rgba(20,255,114,0.35) !important;
+}
+
+/* Progress and indicators */
+.progress-fill,
+.metric-progress,
+.quality-bar,
+.connection-line,
+.record-dot,
+.latency-bar {
+  background: linear-gradient(90deg, var(--lab-neon), var(--lab-gold)) !important;
+}
+
+.badge-text,
+.stat-value,
+.plan-badge,
+.faq-icon-text { color: var(--lab-gold) !important; }
+
+/* Stars/dots tint */
+.background-dots .dot,
+.background-stars .star-bg { color: var(--lab-neon); opacity: 0.6; }
+
+/* Navbar tweak */
+.navbar { background: rgba(5, 18, 11, 0.9) !important; backdrop-filter: blur(10px); }
+
+/* Hero paragraph override */
+.hero-description { color: #ffffff !important; text-shadow: none !important; }
+
+/* Force hero image to fit its column */
+.hero-section .hero-img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Make all paragraphs white (remove cyan/blue) */
+body.lab-theme p { color: #ffffff !important; text-shadow: none !important; }
+
+/* Remove residual cyan glows */
+.hero-title,
+.title-normal { text-shadow: none !important; }
+
+.footer-logo-text:hover,
+.footer-link:hover { text-shadow: 0 0 12px rgba(20,255,114,0.45) !important; }
+
+/* Make Features section highlight match hero highlight */
+.features-title .highlight-text {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(10, 18, 12, 0.45);
+  text-shadow: 0 0 10px rgba(20,255,114,0.45), 0 0 24px rgba(230,193,74,0.35);
+  animation: titleShine 5s linear infinite;
+}
+
+/* Make Guide section highlight match hero highlight */
+.guide-title .highlight-text {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(10, 18, 12, 0.45);
+  text-shadow: 0 0 10px rgba(20,255,114,0.45), 0 0 24px rgba(230,193,74,0.35);
+  animation: titleShine 5s linear infinite;
+}
+
+/* Make Pricing section highlight match hero highlight */
+.pricing-title .highlight-text {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(10, 18, 12, 0.45);
+  text-shadow: 0 0 10px rgba(20,255,114,0.45), 0 0 24px rgba(230,193,74,0.35);
+  animation: titleShine 5s linear infinite;
+}
+
+/* Make FAQ section highlight match hero highlight */
+.faq-title .highlight-text {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(10, 18, 12, 0.45);
+  text-shadow: 0 0 10px rgba(20,255,114,0.45), 0 0 24px rgba(230,193,74,0.35);
+  animation: titleShine 5s linear infinite;
+}
+
+/* Make FAQ CTA title highlight match hero highlight */
+.faq-cta-title .highlight-text {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(10, 18, 12, 0.45);
+  text-shadow: 0 0 10px rgba(20,255,114,0.45), 0 0 24px rgba(230,193,74,0.35);
+  animation: titleShine 5s linear infinite;
+}
+
+/* Make Download title highlight match hero highlight */
+.download-title .highlight-text {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(10, 18, 12, 0.45);
+  text-shadow: 0 0 10px rgba(20,255,114,0.45), 0 0 24px rgba(230,193,74,0.35);
+  animation: titleShine 5s linear infinite;
+}
+
+/* Secondary button border + glow to lab colors */
+.hero-btn.secondary::before { background: linear-gradient(45deg, var(--lab-neon), var(--lab-gold)) !important; }
+.hero-btn.secondary:hover { box-shadow: 0 8px 25px rgba(20,255,114,0.35) !important; }
+
+/* Download main buttons */
+.download-btn-main.android,
+.download-btn-main.ios {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  color: #071b0f !important;
+  border: none !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.download-btn-main.android:hover,
+.download-btn-main.ios:hover {
+  box-shadow: 0 12px 35px rgba(20,255,114,0.45), 0 0 14px rgba(230,193,74,0.35) !important;
+}
+
+/* Legacy download buttons (remove cyan glow) */
+.download-btn.android,
+.download-btn.guide,
+.download-btn.ios {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  color: #071b0f !important;
+  border: none !important;
+  box-shadow: 0 8px 22px rgba(20,255,114,0.35) !important;
+}
+.download-btn.android:hover,
+.download-btn.guide:hover,
+.download-btn.ios:hover {
+  box-shadow: 0 12px 35px rgba(20,255,114,0.45), 0 0 14px rgba(230,193,74,0.35) !important;
+}
+
+/* Ensure non-primary hero buttons have no blue shadow */
+.hero-btn:not(.primary):not(.outline) {
+  box-shadow: none !important;
+}
+
+/* Feature tiles and common hover glows to green */
+.feature-showcase-item:hover,
+.feature-showcase-item:focus-within {
+  box-shadow: 0 15px 40px rgba(20,255,114,0.35) !important;
+  border-color: rgba(20,255,114,0.5) !important;
+}
+
+.ui-card:hover,
+.hero-badge:hover,
+.faq-item.active {
+  box-shadow: 0 15px 40px rgba(20,255,114,0.3) !important;
+}
+/* Hero layout variants */
+.hero-container.image-left { grid-template-columns: 60% 40%; }
+.hero-container.image-left .hero-image { order: 0; }
+.hero-container.image-left .hero-content { order: 1; }
+
+.hero-container.image-right { grid-template-columns: 1fr 1fr; }
+.hero-container.image-right .hero-content { order: 0; }
+.hero-container.image-right .hero-image { order: 1; }
+
+@media (max-width: 1024px) {
+  .hero-container.image-left,
+  .hero-container.image-right { grid-template-columns: 1fr; }
+  .hero-container.image-left .hero-image,
+  .hero-container.image-right .hero-image { order: 0; }
+  .hero-container.image-left .hero-content,
+  .hero-container.image-right .hero-content { order: 1; }
+}
+
+/* Hero title highlight redesign: gold-neon animated shine with glow and underline */
+.hero-title .title-highlight {
+  background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold)) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(10, 18, 12, 0.45);
+  text-shadow: 0 0 10px rgba(20,255,114,0.45), 0 0 24px rgba(230,193,74,0.35);
+  animation: titleShine 5s linear infinite;
+  position: relative;
+}
+
+.hero-title .title-highlight::after { display: none !important; }
+
+@keyframes titleShine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Decorative lab bubbles */
+.lab-bubbles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.lab-bubbles span {
+  position: absolute; bottom: -80px; width: 14px; height: 14px;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #a5ffcd 35%, var(--lab-neon) 60%, rgba(0,0,0,0.2) 100%);
+  border-radius: 50%; filter: blur(0.2px); opacity: 0.45; animation: rise 14s linear infinite;
+}
+.lab-bubbles span:nth-child(1){ left: 12%; animation-duration: 12s; width:12px; height:12px; }
+.lab-bubbles span:nth-child(2){ left: 28%; animation-duration: 16s; width:18px; height:18px; }
+.lab-bubbles span:nth-child(3){ left: 56%; animation-duration: 13s; width:10px; height:10px; }
+.lab-bubbles span:nth-child(4){ left: 74%; animation-duration: 17s; width:16px; height:16px; }
+.lab-bubbles span:nth-child(5){ left: 88%; animation-duration: 15s; width:20px; height:20px; }
+
+@keyframes rise {
+  0% { transform: translateY(0) translateX(0) scale(0.9); opacity: 0; }
+  10% { opacity: 0.5; }
+  50% { transform: translateY(-50vh) translateX(-10px) scale(1.05); }
+  100% { transform: translateY(-100vh) translateX(10px) scale(1.1); opacity: 0; }
+}
+
+

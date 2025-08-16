@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Instaflow</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="lab-theme.css">
+    <link rel="stylesheet" href="checkout.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+</head>
+<body class="lab-theme">
+    <!-- Background Elements -->
+    <div class="checkout-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+        <div class="gradient-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link" onclick="handleLogoClick(); return false;">
+                    <h2 class="logo-text">Instaflow</h2>
+                </a>
+            </div>
+                        <div class="nav-links">
+            <a href="features-new.html" class="nav-link">Features</a>
+            <a href="download.html" class="nav-link">Download</a>
+            <a href="guide.html" class="nav-link">Guide</a>
+            
+            <a href="partners.html" class="nav-link">Partners</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
+        </div>
+            <div class="nav-auth">
+                <!-- Guest State (when not logged in) -->
+                <div class="auth-buttons guest-state">
+                    <a href="auth.html" class="auth-btn signin-btn">Sign In</a>
+                    <a href="auth.html?form=signup" class="auth-btn signup-btn">Sign Up</a>
+                </div>
+                
+                <!-- Logged In State (when user is authenticated) -->
+                <div class="auth-buttons logged-in-state" style="display: none;">
+                    <div class="profile-menu">
+                        <button class="profile-btn" onclick="toggleProfileMenu()">
+                            <span class="profile-avatar">👤</span>
+                            <span class="profile-name">User</span>
+                            <span class="profile-arrow">▼</span>
+                        </button>
+                        <div class="profile-dropdown" id="profile-dropdown">
+                                                        <a href="profile.html" class="dropdown-item">
+                            <span class="item-icon">👤</span>
+                            Profile
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-only" style="display: none;">
+                            <span class="item-icon">📊</span>
+                            Dashboard
+                        </a>
+                            <a href="#" class="dropdown-item">
+                                <span class="item-icon">💳</span>
+                                Billing
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item logout-btn" onclick="handleLogout()">
+                                <span class="item-icon">🚪</span>
+                                Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    <!-- Main Checkout Container -->
+    <div class="checkout-container">
+        <div class="checkout-content">
+            <!-- Left Side - Order Summary -->
+            <div class="order-summary">
+                <div class="summary-header">
+                    <h2 class="summary-title">Order Summary</h2>
+                    <div class="summary-icon">📦</div>
+                </div>
+                
+                <div class="plan-details">
+                    <div class="plan-card" id="plan-card">
+                        <div class="plan-header">
+                            <h3 class="plan-name" id="plan-name">Instaflow Pro</h3>
+                            <div class="plan-badge" id="plan-badge">Most Popular</div>
+                        </div>
+                        <div class="plan-features" id="plan-features">
+                            <!-- Features will be dynamically loaded -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pricing-breakdown">
+                    <div class="price-item">
+                        <span id="plan-description">Instaflow Pro Plan</span>
+                        <span class="price" id="plan-price">$29.99</span>
+                    </div>
+                    <div class="price-item">
+                        <span>Setup Fee</span>
+                        <span class="price">$0.00</span>
+                    </div>
+                    <div class="price-item discount" id="discount-item">
+                        <span>Launch Discount</span>
+                        <span class="price">-$5.00</span>
+                    </div>
+                    <div class="price-divider"></div>
+                    <div class="price-item total">
+                        <span>Total Today</span>
+                        <span class="price" id="total-price">$24.99</span>
+                    </div>
+                </div>
+                
+                <div class="security-info">
+                    <div class="security-badge">
+                        <span class="security-icon">🔒</span>
+                        <span>256-bit SSL Encryption</span>
+                    </div>
+                    <div class="security-badge">
+                        <span class="security-icon">🛡️</span>
+                        <span>PCI DSS Compliant</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Payment Form -->
+            <div class="payment-section">
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <h2 class="payment-title">Complete Your Purchase</h2>
+                        <p class="payment-subtitle">Secure payment powered by Stripe</p>
+                    </div>
+                    
+                    <form id="payment-form" class="payment-form">
+                        <!-- Customer Information -->
+                        <div class="form-section">
+                            <h3 class="section-title">Contact Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" required placeholder="your@email.com">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Method -->
+                        <div class="form-section">
+                            <h3 class="section-title">Payment Method</h3>
+                            <div class="payment-methods">
+                                <div class="payment-method active" data-method="card">
+                                    <span class="method-icon">💳</span>
+                                    <span>Credit Card</span>
+                                </div>
+                                <div class="payment-method" data-method="crypto">
+                                    <span class="method-icon">₿</span>
+                                    <span>Crypto</span>
+                                </div>
+                            </div>
+                            
+                            <div id="card-element" class="stripe-element">
+                                <!-- Stripe Card Element will be inserted here -->
+                            </div>
+                            
+                            <div id="card-errors" class="error-message" role="alert"></div>
+                            
+                            <!-- Crypto Payment Interface -->
+                            <div id="crypto-payment-interface" class="crypto-interface" style="display: none;">
+                                <div class="crypto-selection">
+                                    <h4 class="crypto-title">Select Cryptocurrency</h4>
+                                    <div class="crypto-options">
+                                        <div class="crypto-option active" data-crypto="bitcoin">
+                                            <span class="crypto-icon">₿</span>
+                                            <span class="crypto-name">Bitcoin (BTC)</span>
+                                            <span class="crypto-rate" id="btc-rate">Loading...</span>
+                                        </div>
+                                        <div class="crypto-option" data-crypto="ethereum">
+                                            <span class="crypto-icon">Ξ</span>
+                                            <span class="crypto-name">Ethereum (ETH)</span>
+                                            <span class="crypto-rate" id="eth-rate">Loading...</span>
+                                        </div>
+                                        <div class="crypto-option" data-crypto="usdt">
+                                            <span class="crypto-icon">₮</span>
+                                            <span class="crypto-name">USDT</span>
+                                            <span class="crypto-rate" id="usdt-rate">$1.00</span>
+                                        </div>
+                                        <div class="crypto-option" data-crypto="usdc">
+                                            <span class="crypto-icon">₮</span>
+                                            <span class="crypto-name">USDC</span>
+                                            <span class="crypto-rate" id="usdc-rate">$1.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="crypto-payment-details">
+                                    <div class="payment-amount-row">
+                                        <span>Amount in USD:</span>
+                                        <span class="usd-amount" id="crypto-usd-amount">$24.99</span>
+                                    </div>
+                                    <div class="payment-amount-row">
+                                        <span>Crypto Amount:</span>
+                                        <span class="crypto-amount" id="crypto-amount">Loading...</span>
+                                    </div>
+                                    <div class="payment-amount-row">
+                                        <span>Network Fee:</span>
+                                        <span class="network-fee" id="network-fee">~$2.00</span>
+                                    </div>
+                                    <div class="payment-amount-row total">
+                                        <span>Total to Pay:</span>
+                                        <span class="total-crypto" id="total-crypto">Loading...</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="crypto-wallet-section">
+                                    <h4 class="wallet-title">Connect Wallet</h4>
+                                    <div class="wallet-options">
+                                        <button class="wallet-btn" data-wallet="metamask">
+                                            <span class="wallet-icon">🦊</span>
+                                            <span>MetaMask</span>
+                                        </button>
+                                        <button class="wallet-btn" data-wallet="walletconnect">
+                                            <span class="wallet-icon">🔗</span>
+                                            <span>WalletConnect</span>
+                                        </button>
+                                        <button class="wallet-btn" data-wallet="manual">
+                                            <span class="wallet-icon">📝</span>
+                                            <span>Manual Address</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <div id="manual-address-input" class="manual-address" style="display: none;">
+                                        <label for="crypto-address">Wallet Address:</label>
+                                        <input type="text" id="crypto-address" placeholder="Enter your wallet address">
+                                        <small class="address-hint">Make sure to use the correct network for your selected cryptocurrency</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="crypto-payment-status" id="crypto-payment-status" style="display: none;">
+                                    <div class="status-header">
+                                        <span class="status-icon">⏳</span>
+                                        <span class="status-text">Waiting for Payment</span>
+                                    </div>
+                                    <div class="payment-address">
+                                        <span>Send payment to:</span>
+                                        <div class="address-display">
+                                            <span id="payment-address-text">Loading...</span>
+                                            <button class="copy-btn" onclick="copyAddress()">📋</button>
+                                        </div>
+                                    </div>
+                                    <div class="payment-timer">
+                                        <span>Time remaining: </span>
+                                        <span id="payment-timer">15:00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Billing Address -->
+                        <div class="form-section">
+                            <h3 class="section-title">Billing Address</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" id="name" required placeholder="John Doe">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input type="text" id="address" required placeholder="123 Main St">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" required placeholder="New York">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" required placeholder="NY">
+                                </div>
+                                <div class="form-group">
+                                    <label for="zip">ZIP Code</label>
+                                    <input type="text" id="zip" required placeholder="10001">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Terms and Conditions -->
+                        <div class="form-section">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" id="terms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>
+                            </label>
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" id="marketing">
+                                <span class="checkmark"></span>
+                                Send me updates about new features and offers
+                            </label>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <button type="submit" class="submit-btn" id="submit-btn">
+                            <span class="btn-text">Complete Purchase</span>
+                            <span class="btn-amount" id="btn-amount">$24.99</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                        
+                        <div class="payment-footer">
+                            <p class="footer-text">Your payment is secure and encrypted</p>
+                            <div class="payment-logos">
+                                <span class="payment-logo">🔒</span>
+                                <span class="payment-logo">💳</span>
+                                <span class="payment-logo">🏦</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="success-animation">
+                <div class="success-circle">
+                    <span class="success-icon">✅</span>
+                </div>
+            </div>
+            <h2 class="modal-title">Payment Successful!</h2>
+            <p class="modal-message" id="modal-message">Welcome to Instaflow Pro! Your account has been activated.</p>
+            <div class="modal-actions">
+                <a href="index.html" class="modal-btn primary">Go to Home</a>
+                <button class="modal-btn secondary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Processing your payment...</p>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3 class="footer-logo-text">Instaflow</h3>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html#features" class="footer-link">Features</a>
+                    <a href="index.html#download" class="footer-link">Download</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2024 Instaflow. Professional Screen Projection Software.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="checkout.js"></script>
+    
+    <script>
+        // Logo click handler for navigation
+        function handleLogoClick() {
+            console.log('Logo clicked, navigating to home page');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

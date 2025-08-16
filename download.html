@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Instaflow - Professional Screen Projection Software</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="lab-theme.css">
+    <link rel="stylesheet" href="download.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+</head>
+<body class="lab-theme">
+    <!-- Background Elements -->
+    <div class="download-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+            <div class="shape shape-6"></div>
+        </div>
+        <div class="gradient-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="orb orb-4"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link" onclick="handleLogoClick(); return false;">
+                    <h2 class="logo-text">Instaflow</h2>
+                </a>
+            </div>
+                        <div class="nav-links">
+            <a href="features-new.html" class="nav-link">Features</a>
+            <a href="download.html" class="nav-link">Download</a>
+            <a href="guide.html" class="nav-link">Guide</a>
+            
+            <a href="partners.html" class="nav-link">Partners</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+                            <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
+        </div>
+            <div class="nav-auth">
+                <!-- Guest State (when not logged in) -->
+                <div class="auth-buttons guest-state">
+                    <a href="auth.html" class="auth-btn signin-btn">Sign In</a>
+                    <a href="auth.html?form=signup" class="auth-btn signup-btn">Sign Up</a>
+                </div>
+                
+                <!-- Logged In State (when user is authenticated) -->
+                <div class="auth-buttons logged-in-state" style="display: none;">
+                    <div class="profile-menu">
+                        <button class="profile-btn" onclick="toggleProfileMenu()">
+                            <span class="profile-avatar">👤</span>
+                            <span class="profile-name">User</span>
+                            <span class="profile-arrow">▼</span>
+                        </button>
+                        <div class="profile-dropdown" id="profile-dropdown">
+                                                        <a href="profile.html" class="dropdown-item">
+                            <span class="item-icon">👤</span>
+                            Profile
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-only" style="display: none;">
+                            <span class="item-icon">📊</span>
+                            Dashboard
+                        </a>
+                            <a href="#" class="dropdown-item">
+                                <span class="item-icon">💳</span>
+                                Billing
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item logout-btn" onclick="handleLogout()">
+                                <span class="item-icon">🚪</span>
+                                Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Download Container -->
+    <div class="download-container">
+        <div class="download-card">
+            <!-- Header Section -->
+            <div class="download-header">
+                <div class="header-icon">
+                    <span class="icon-symbol">🚀</span>
+                </div>
+                <h1 class="download-title">Download Instaflow</h1>
+                <p class="download-subtitle">Get the latest version of our professional screen projection software. Choose your platform and start creating amazing presentations today.</p>
+            </div>
+
+            <!-- Version Info -->
+            <div class="version-info">
+                <div class="version-badge">
+                    <span class="version-number">v2.1.4</span>
+                    <span class="version-label">Latest Release</span>
+                </div>
+                <div class="release-date">
+                    <span class="date-label">Released:</span>
+                    <span class="date-value">December 15, 2024</span>
+                </div>
+            </div>
+
+            <!-- Download Options -->
+            <div class="download-options">
+                <!-- Windows Download -->
+                <div class="download-option">
+                    <div class="platform-icon">🪟</div>
+                    <div class="platform-info">
+                        <h3 class="platform-name">Windows</h3>
+                        <p class="platform-details">Windows 10/11 (64-bit)</p>
+                        <div class="file-info">
+                            <span class="file-size">45.2 MB</span>
+                            <span class="file-type">.exe</span>
+                        </div>
+                    </div>
+                    <button class="download-btn windows-btn" onclick="downloadFile('windows')">
+                        <span class="btn-text">Download for Windows</span>
+                        <span class="btn-icon">⬇️</span>
+                    </button>
+                </div>
+
+                <!-- macOS Download -->
+                <div class="download-option">
+                    <div class="platform-icon">🍎</div>
+                    <div class="platform-info">
+                        <h3 class="platform-name">macOS</h3>
+                        <p class="platform-details">macOS 11.0 or later</p>
+                        <div class="file-info">
+                            <span class="file-size">52.8 MB</span>
+                            <span class="file-type">.dmg</span>
+                        </div>
+                    </div>
+                    <button class="download-btn macos-btn" onclick="downloadFile('macos')">
+                        <span class="btn-text">Download for macOS</span>
+                        <span class="btn-icon">⬇️</span>
+                    </button>
+                </div>
+
+                <!-- Linux Download -->
+                <div class="download-option">
+                    <div class="platform-icon">🐧</div>
+                    <div class="platform-info">
+                        <h3 class="platform-name">Linux</h3>
+                        <p class="platform-details">Ubuntu 20.04+, Debian 11+</p>
+                        <div class="file-info">
+                            <span class="file-size">38.7 MB</span>
+                            <span class="file-type">.AppImage</span>
+                        </div>
+                    </div>
+                    <button class="download-btn linux-btn" onclick="downloadFile('linux')">
+                        <span class="btn-text">Download for Linux</span>
+                        <span class="btn-icon">⬇️</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- System Requirements -->
+            <div class="system-requirements">
+                <h3 class="requirements-title">System Requirements</h3>
+                <div class="requirements-grid">
+                    <div class="requirement-item">
+                        <div class="req-icon">💻</div>
+                        <div class="req-content">
+                            <h4>Processor</h4>
+                            <p>Intel Core i3 or AMD equivalent</p>
+                        </div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="req-icon">🧠</div>
+                        <div class="req-content">
+                            <h4>Memory</h4>
+                            <p>4 GB RAM minimum, 8 GB recommended</p>
+                        </div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="req-icon">💾</div>
+                        <div class="req-content">
+                            <h4>Storage</h4>
+                            <p>200 MB available disk space</p>
+                        </div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="req-icon">🖥️</div>
+                        <div class="req-content">
+                            <h4>Display</h4>
+                            <p>1024x768 minimum resolution</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Installation Guide -->
+            <div class="installation-guide">
+                <h3 class="guide-title">Quick Installation Guide</h3>
+                <div class="guide-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Download</h4>
+                            <p>Click the download button for your operating system above</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Install</h4>
+                            <p>Run the installer and follow the on-screen instructions</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Launch</h4>
+                            <p>Open Instaflow and start creating amazing presentations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Downloads -->
+            <div class="additional-downloads">
+                <h3 class="additional-title">Additional Downloads</h3>
+                <div class="additional-grid">
+                    <a href="#" class="additional-item" onclick="downloadFile('manual')">
+                        <div class="additional-icon">📖</div>
+                        <div class="additional-content">
+                            <h4>User Manual</h4>
+                            <p>Complete guide and documentation</p>
+                        </div>
+                        <span class="download-arrow">→</span>
+                    </a>
+                    <a href="#" class="additional-item" onclick="downloadFile('samples')">
+                        <div class="additional-icon">🎨</div>
+                        <div class="additional-content">
+                            <h4>Sample Templates</h4>
+                            <p>Ready-to-use presentation templates</p>
+                        </div>
+                        <span class="download-arrow">→</span>
+                    </a>
+                    <a href="#" class="additional-item" onclick="downloadFile('plugins')">
+                        <div class="additional-icon">🔌</div>
+                        <div class="additional-content">
+                            <h4>Plugin Pack</h4>
+                            <p>Additional effects and transitions</p>
+                        </div>
+                        <span class="download-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3 class="footer-logo-text">Instaflow</h3>
+                </div>
+                <div class="footer-links">
+                    <a href="#features" class="footer-link">Features</a>
+                    <a href="#download" class="footer-link">Download</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2024 Instaflow. Professional Screen Projection Software.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Decorative lab bubbles -->
+    <div class="lab-bubbles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <script src="download.js"></script>
+    
+    <script>
+        // Logo click handler for navigation
+        function handleLogoClick() {
+            console.log('Logo clicked, navigating to home page');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

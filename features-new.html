@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - Instaflow Professional Screen Projection Software</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="lab-theme.css">
+    <link rel="stylesheet" href="features-new.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+</head>
+<body class="lab-theme">
+    <!-- Background Elements -->
+    <div class="features-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+            <div class="shape shape-6"></div>
+        </div>
+        <div class="gradient-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="orb orb-4"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link" onclick="handleLogoClick(); return false;">
+                    <h2 class="logo-text">Instaflow</h2>
+                </a>
+            </div>
+                        <div class="nav-links">
+            <a href="features-new.html" class="nav-link">Features</a>
+            <a href="download.html" class="nav-link">Download</a>
+            <a href="guide.html" class="nav-link">Guide</a>
+            
+            <a href="partners.html" class="nav-link">Partners</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+                            <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
+        </div>
+            <div class="nav-auth">
+                <!-- Guest State (when not logged in) -->
+                <div class="auth-buttons guest-state">
+                    <a href="auth.html" class="auth-btn signin-btn">Sign In</a>
+                    <a href="auth.html?form=signup" class="auth-btn signup-btn">Sign Up</a>
+                </div>
+                
+                <!-- Logged In State (when user is authenticated) -->
+                <div class="auth-buttons logged-in-state" style="display: none;">
+                    <div class="profile-menu">
+                        <button class="profile-btn" onclick="toggleProfileMenu()">
+                            <span class="profile-avatar">👤</span>
+                            <span class="profile-name">User</span>
+                            <span class="profile-arrow">▼</span>
+                        </button>
+                        <div class="profile-dropdown" id="profile-dropdown">
+                                                        <a href="profile.html" class="dropdown-item">
+                            <span class="item-icon">👤</span>
+                            Profile
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-only" style="display: none;">
+                            <span class="item-icon">📊</span>
+                            Dashboard
+                        </a>
+                            <a href="#" class="dropdown-item">
+                                <span class="item-icon">💳</span>
+                                Billing
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item logout-btn" onclick="handleLogout()">
+                                <span class="item-icon">🚪</span>
+                                Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Features Container -->
+    <section class="features-section">
+        <div class="features-container">
+            <div class="features-card">
+            <!-- Header Section -->
+            <div class="features-header">
+                <div class="header-icon">
+                    <span class="icon-symbol">⭐</span>
+                </div>
+                <h1 class="features-title">Instaflow Features</h1>
+                <p class="features-subtitle">Discover the powerful capabilities that make Instaflow the ultimate choice for professional screen projection. From basic functionality to advanced automation, we've got everything you need.</p>
+            </div>
+
+            <!-- Core Features Section -->
+            <div class="core-features-section">
+                <h3 class="section-title">Core Features</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <h4>Smart Projection</h4>
+                        <p>Intelligent screen detection and automatic resolution optimization for perfect display quality</p>
+                        <div class="feature-tags">
+                            <span class="tag">Essential</span>
+                            <span class="tag">Auto</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <h4>Real-time Processing</h4>
+                        <p>Lightning-fast rendering and zero-latency projection for seamless presentations</p>
+                        <div class="feature-tags">
+                            <span class="tag">Performance</span>
+                            <span class="tag">Speed</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <h4>Secure Streaming</h4>
+                        <p>Enterprise-grade encryption and secure protocols for confidential content projection</p>
+                        <div class="feature-tags">
+                            <span class="tag">Security</span>
+                            <span class="tag">Enterprise</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Features Section -->
+            <div class="advanced-features-section">
+                <h3 class="section-title">Advanced Features</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎨</div>
+                        <h4>Custom Templates</h4>
+                        <p>Create and save custom projection templates for consistent branding</p>
+                        <div class="feature-tags">
+                            <span class="tag">Intermediate</span>
+                            <span class="tag">Templates</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔌</div>
+                        <h4>Plugin System</h4>
+                        <p>Extend functionality with our powerful plugin architecture</p>
+                        <div class="feature-tags">
+                            <span class="tag">Advanced</span>
+                            <span class="tag">Plugins</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <h4>Analytics & Reports</h4>
+                        <p>Track performance and generate detailed projection reports</p>
+                        <div class="feature-tags">
+                            <span class="tag">Advanced</span>
+                            <span class="tag">Analytics</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🌐</div>
+                        <h4>Multi-Screen Setup</h4>
+                        <p>Configure complex multi-monitor and multi-projector setups</p>
+                        <div class="feature-tags">
+                            <span class="tag">Expert</span>
+                            <span class="tag">Multi-Screen</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Automation Features Section -->
+            <div class="automation-section">
+                <h3 class="section-title">Automation & AI</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🤖</div>
+                        <h4>AI Content Detection</h4>
+                        <p>Automatically detect and optimize content types for best projection results</p>
+                        <div class="feature-tags">
+                            <span class="tag">AI</span>
+                            <span class="tag">Smart</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⏰</div>
+                        <h4>Scheduled Projections</h4>
+                        <p>Set up automated projections at specific times and dates</p>
+                        <div class="feature-tags">
+                            <span class="tag">Automation</span>
+                            <span class="tag">Schedule</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔄</div>
+                        <h4>Auto-Sync</h4>
+                        <p>Automatically synchronize content across multiple displays</p>
+                        <div class="feature-tags">
+                            <span class="tag">Sync</span>
+                            <span class="tag">Auto</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integration Features Section -->
+            <div class="integration-section">
+                <h3 class="section-title">Integrations & APIs</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔗</div>
+                        <h4>REST API</h4>
+                        <p>Full REST API for custom integrations and third-party applications</p>
+                        <div class="feature-tags">
+                            <span class="tag">API</span>
+                            <span class="tag">Integration</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">☁️</div>
+                        <h4>Cloud Sync</h4>
+                        <p>Seamless cloud synchronization for cross-device content access</p>
+                        <div class="feature-tags">
+                            <span class="tag">Cloud</span>
+                            <span class="tag">Sync</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <h4>Mobile Control</h4>
+                        <p>Control projections remotely from your mobile device</p>
+                        <div class="feature-tags">
+                            <span class="tag">Mobile</span>
+                            <span class="tag">Remote</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Features Section -->
+            <div class="performance-section">
+                <h3 class="section-title">Performance & Optimization</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🚀</div>
+                        <h4>Hardware Acceleration</h4>
+                        <p>GPU-accelerated rendering for smooth 4K and 8K projections</p>
+                        <div class="feature-tags">
+                            <span class="tag">Performance</span>
+                            <span class="tag">4K</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💾</div>
+                        <h4>Smart Caching</h4>
+                        <p>Intelligent content caching for instant projection startup</p>
+                        <div class="feature-tags">
+                            <span class="tag">Speed</span>
+                            <span class="tag">Cache</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎛️</div>
+                        <h4>Performance Monitoring</h4>
+                        <p>Real-time performance metrics and optimization suggestions</p>
+                        <div class="feature-tags">
+                            <span class="tag">Monitor</span>
+                            <span class="tag">Optimize</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enterprise Features Section -->
+            <div class="enterprise-section">
+                <h3 class="section-title">Enterprise Features</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">👥</div>
+                        <h4>User Management</h4>
+                        <p>Advanced user roles, permissions, and access control</p>
+                        <div class="feature-tags">
+                            <span class="tag">Enterprise</span>
+                            <span class="tag">Security</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📈</div>
+                        <h4>Usage Analytics</h4>
+                        <p>Comprehensive usage reports and team performance insights</p>
+                        <div class="feature-tags">
+                            <span class="tag">Analytics</span>
+                            <span class="tag">Reports</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔐</div>
+                        <h4>SSO Integration</h4>
+                        <p>Single Sign-On integration with enterprise identity providers</p>
+                        <div class="feature-tags">
+                            <span class="tag">SSO</span>
+                            <span class="tag">Enterprise</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3 class="footer-logo-text">Instaflow</h3>
+                </div>
+                <div class="footer-links">
+                    <a href="#features" class="footer-link">Features</a>
+                    <a href="#download" class="footer-link">Download</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2024 Instaflow. Professional Screen Projection Software.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Decorative lab bubbles -->
+    <div class="lab-bubbles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <script src="features-new.js"></script>
+    
+    <script>
+        // Logo click handler for navigation
+        function handleLogoClick() {
+            console.log('Logo clicked, navigating to home page');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

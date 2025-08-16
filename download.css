@@ -1,0 +1,713 @@
+/* Download Page Styling */
+:root {
+    --lab-green: #14ff72;
+    --lab-emerald: #0bd25d;
+    --lab-neon: #00ff88;
+    --lab-gold: #e6c14a;
+    --lab-dark: #071b0f;
+    --lab-deep: #03140b;
+}
+
+/* Background Elements */
+.download-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* Floating Shapes */
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--lab-neon), var(--lab-gold));
+    opacity: 0.1;
+    animation: float 20s infinite linear;
+}
+
+.shape-1 {
+    width: 80px;
+    height: 80px;
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 120px;
+    height: 120px;
+    top: 20%;
+    right: 15%;
+    animation-delay: -5s;
+}
+
+.shape-3 {
+    width: 60px;
+    height: 60px;
+    bottom: 20%;
+    left: 20%;
+    animation-delay: -10s;
+}
+
+.shape-4 {
+    width: 100px;
+    height: 100px;
+    bottom: 10%;
+    right: 10%;
+    animation-delay: -15s;
+}
+
+.shape-5 {
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    left: 50%;
+    animation-delay: -7s;
+}
+
+.shape-6 {
+    width: 90px;
+    height: 90px;
+    top: 30%;
+    left: 60%;
+    animation-delay: -12s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    33% {
+        transform: translateY(-20px) rotate(120deg);
+    }
+    66% {
+        transform: translateY(10px) rotate(240deg);
+    }
+}
+
+/* Gradient Orbs */
+.gradient-orbs {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    animation: orbFloat 15s infinite ease-in-out;
+}
+
+.orb-1 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(20, 255, 114, 0.3), transparent);
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(230, 193, 74, 0.2), transparent);
+    top: 50%;
+    right: -50px;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.25), transparent);
+    bottom: -50px;
+    left: 50%;
+    animation-delay: -10s;
+}
+
+.orb-4 {
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent);
+    top: 70%;
+    left: 20%;
+    animation-delay: -8s;
+}
+
+@keyframes orbFloat {
+    0%, 100% {
+        transform: translateY(0px) scale(1);
+    }
+    50% {
+        transform: translateY(-30px) scale(1.1);
+    }
+}
+
+/* Download Container */
+.download-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    padding-top: 120px;
+}
+
+.download-card {
+    background: rgba(7, 27, 15, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(20, 255, 114, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(20, 255, 114, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.download-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--lab-gold), var(--lab-neon), var(--lab-gold));
+    background-size: 200% 100%;
+    animation: titleShine 6s linear infinite;
+}
+
+/* Header Section */
+.download-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, var(--lab-neon), var(--lab-gold));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 10px 30px rgba(20, 255, 114, 0.3);
+    animation: logoPulse 3s ease-in-out infinite;
+}
+
+.icon-symbol {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes logoPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.download-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--lab-gold), var(--lab-neon), var(--lab-gold));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: titleShine 6s linear infinite;
+    margin-bottom: 0.5rem;
+}
+
+.download-subtitle {
+    color: #ffffff;
+    font-size: 1.1rem;
+    opacity: 0.8;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Version Info */
+.version-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.version-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(20, 255, 114, 0.1);
+    border: 1px solid rgba(20, 255, 114, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+}
+
+.version-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--lab-neon);
+    margin-bottom: 0.25rem;
+}
+
+.version-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.release-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.date-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.25rem;
+}
+
+.date-value {
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Download Options */
+.download-options {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.download-option {
+    background: rgba(7, 27, 15, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(20, 255, 114, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    width: 320px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.download-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--lab-gold), var(--lab-neon));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.download-option:hover {
+    background: rgba(20, 255, 114, 0.05);
+    border-color: rgba(20, 255, 114, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(20, 255, 114, 0.1);
+}
+
+.download-option:hover::before {
+    transform: scaleX(1);
+}
+
+.platform-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.platform-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.platform-details {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.file-info {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.file-size {
+    background: rgba(20, 255, 114, 0.1);
+    color: var(--lab-neon);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.file-type {
+    background: rgba(230, 193, 74, 0.1);
+    color: var(--lab-gold);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Download Buttons */
+.download-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold));
+    background-size: 200% 100%;
+    animation: titleShine 6s linear infinite;
+    color: #071b0f;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(20, 255, 114, 0.3);
+}
+
+.btn-icon {
+    transition: transform 0.3s ease;
+}
+
+.download-btn:hover .btn-icon {
+    transform: translateY(2px);
+}
+
+/* System Requirements */
+.system-requirements {
+    margin-bottom: 3rem;
+}
+
+.requirements-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: titleShine 6s linear infinite;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.requirements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.requirement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(7, 27, 15, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 12px;
+    border: 1px solid rgba(20, 255, 114, 0.3);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.requirement-item:hover {
+    background: rgba(20, 255, 114, 0.05);
+    border-color: rgba(20, 255, 114, 0.2);
+    transform: translateY(-2px);
+}
+
+.req-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.req-content h4 {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.req-content p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Installation Guide */
+.installation-guide {
+    margin-bottom: 3rem;
+}
+
+.guide-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: titleShine 6s linear infinite;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.guide-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(7, 27, 15, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 12px;
+    border: 1px solid rgba(20, 255, 114, 0.3);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.step:hover {
+    background: rgba(20, 255, 114, 0.05);
+    border-color: rgba(20, 255, 114, 0.2);
+    transform: translateY(-2px);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, var(--lab-neon), var(--lab-gold));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #071b0f;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.step-content h4 {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.step-content p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Additional Downloads */
+.additional-downloads {
+    margin-bottom: 2rem;
+}
+
+.additional-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, var(--lab-gold), #fff1a8, var(--lab-neon), var(--lab-gold));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: titleShine 6s linear infinite;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.additional-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.additional-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(7, 27, 15, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(20, 255, 114, 0.3);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.additional-item:hover {
+    background: rgba(20, 255, 114, 0.05);
+    border-color: rgba(20, 255, 114, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(20, 255, 114, 0.1);
+}
+
+.additional-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.additional-content h4 {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.additional-content p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.download-arrow {
+    color: var(--lab-neon);
+    font-size: 1.2rem;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.additional-item:hover .download-arrow {
+    transform: translateX(5px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .download-container {
+        padding: 1rem;
+        padding-top: 100px;
+    }
+    
+    .download-card {
+        padding: 2rem;
+        border-radius: 20px;
+    }
+    
+    .download-title {
+        font-size: 2rem;
+    }
+    
+    .version-info {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .download-options {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .download-option {
+        width: 100%;
+        max-width: 320px;
+    }
+    
+    .requirements-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .guide-steps {
+        grid-template-columns: 1fr;
+    }
+    
+    .additional-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .download-card {
+        padding: 1.5rem;
+    }
+    
+    .download-title {
+        font-size: 1.8rem;
+    }
+    
+    .header-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .icon-symbol {
+        font-size: 1.5rem;
+    }
+    
+    .download-option {
+        padding: 1.5rem;
+    }
+    
+    .platform-icon {
+        font-size: 2.5rem;
+    }
+}
+
+/* Animation for title shine effect */
+@keyframes titleShine {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}

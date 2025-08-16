@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide - Instaflow Professional Screen Projection Software</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="lab-theme.css">
+    <link rel="stylesheet" href="guide.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+</head>
+<body class="lab-theme">
+    <!-- Background Elements -->
+    <div class="guide-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+            <div class="shape shape-6"></div>
+        </div>
+        <div class="gradient-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="orb orb-4"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link" onclick="handleLogoClick(); return false;">
+                    <h2 class="logo-text">Instaflow</h2>
+                </a>
+            </div>
+                        <div class="nav-links">
+            <a href="features-new.html" class="nav-link">Features</a>
+            <a href="download.html" class="nav-link">Download</a>
+            <a href="guide.html" class="nav-link">Guide</a>
+            
+            <a href="partners.html" class="nav-link">Partners</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+                            <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
+        </div>
+            <div class="nav-auth">
+                <!-- Guest State (when not logged in) -->
+                <div class="auth-buttons guest-state">
+                    <a href="auth.html" class="auth-btn signin-btn">Sign In</a>
+                    <a href="auth.html?form=signup" class="auth-btn signup-btn">Sign Up</a>
+                </div>
+                
+                <!-- Logged In State (when user is authenticated) -->
+                <div class="auth-buttons logged-in-state" style="display: none;">
+                    <div class="profile-menu">
+                        <button class="profile-btn" onclick="toggleProfileMenu()">
+                            <span class="profile-avatar">👤</span>
+                            <span class="profile-name">User</span>
+                            <span class="profile-arrow">▼</span>
+                        </button>
+                        <div class="profile-dropdown" id="profile-dropdown">
+                                                        <a href="profile.html" class="dropdown-item">
+                            <span class="item-icon">👤</span>
+                            Profile
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-only" style="display: none;">
+                            <span class="item-icon">📊</span>
+                            Dashboard
+                        </a>
+                            <a href="#" class="dropdown-item">
+                                <span class="item-icon">💳</span>
+                                Billing
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item logout-btn" onclick="handleLogout()">
+                                <span class="item-icon">🚪</span>
+                                Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Guide Container -->
+    <div class="guide-container">
+        <div class="guide-card">
+            <!-- Header Section -->
+            <div class="guide-header">
+                <div class="header-icon">
+                    <span class="icon-symbol">📚</span>
+                </div>
+                <h1 class="guide-title">Instaflow Guide</h1>
+                <p class="guide-subtitle">Master the art of professional screen projection with our comprehensive guides and tutorials. From basic setup to advanced techniques, we've got you covered.</p>
+            </div>
+
+            <!-- Quick Start Section -->
+            <div class="quick-start-section">
+                <h3 class="section-title">Quick Start Guide</h3>
+                <div class="guide-grid">
+                    <div class="guide-item">
+                        <div class="guide-icon">🚀</div>
+                        <div class="guide-content">
+                            <h4>Getting Started</h4>
+                            <p>Install Instaflow and set up your first projection in minutes</p>
+                            <a href="#" class="guide-link" onclick="openGuide('getting-started')">Read Guide →</a>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-icon">⚙️</div>
+                        <div class="guide-content">
+                            <h4>Basic Configuration</h4>
+                            <p>Configure your display settings and projection preferences</p>
+                            <a href="#" class="guide-link" onclick="openGuide('configuration')">Read Guide →</a>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-icon">🎯</div>
+                        <div class="guide-content">
+                            <h4>First Projection</h4>
+                            <p>Create and run your first professional projection</p>
+                            <a href="#" class="guide-link" onclick="openGuide('first-projection')">Read Guide →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Features Section -->
+            <div class="advanced-features-section">
+                <h3 class="section-title">Advanced Features</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎨</div>
+                        <h4>Custom Templates</h4>
+                        <p>Create and save custom projection templates for consistent branding</p>
+                        <div class="feature-tags">
+                            <span class="tag">Intermediate</span>
+                            <span class="tag">Templates</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔌</div>
+                        <h4>Plugin System</h4>
+                        <p>Extend functionality with our powerful plugin architecture</p>
+                        <div class="feature-tags">
+                            <span class="tag">Advanced</span>
+                            <span class="tag">Plugins</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <h4>Analytics & Reports</h4>
+                        <p>Track performance and generate detailed projection reports</p>
+                        <div class="feature-tags">
+                            <span class="tag">Advanced</span>
+                            <span class="tag">Analytics</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🌐</div>
+                        <h4>Multi-Screen Setup</h4>
+                        <p>Configure complex multi-monitor and multi-projector setups</p>
+                        <div class="feature-tags">
+                            <span class="tag">Expert</span>
+                            <span class="tag">Multi-Screen</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Tutorials Section -->
+            <div class="video-tutorials-section">
+                <h3 class="section-title">Video Tutorials</h3>
+                <div class="tutorials-grid">
+                    <div class="tutorial-item">
+                        <div class="tutorial-thumbnail">
+                            <span class="play-icon">▶️</span>
+                        </div>
+                        <div class="tutorial-content">
+                            <h4>Complete Beginner's Guide</h4>
+                            <p>15 min • Learn the basics of Instaflow from scratch</p>
+                            <div class="tutorial-meta">
+                                <span class="difficulty beginner">Beginner</span>
+                                <span class="views">2.5K views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tutorial-item">
+                        <div class="tutorial-thumbnail">
+                            <span class="play-icon">▶️</span>
+                        </div>
+                        <div class="tutorial-content">
+                            <h4>Advanced Projection Techniques</h4>
+                            <p>28 min • Master advanced projection methods</p>
+                            <div class="tutorial-meta">
+                                <span class="difficulty advanced">Advanced</span>
+                                <span class="views">1.8K views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tutorial-item">
+                        <div class="tutorial-thumbnail">
+                            <span class="play-icon">▶️</span>
+                        </div>
+                        <div class="tutorial-content">
+                            <h4>Custom Template Creation</h4>
+                            <p>22 min • Build professional templates from scratch</p>
+                            <div class="tutorial-meta">
+                                <span class="difficulty intermediate">Intermediate</span>
+                                <span class="views">1.2K views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting Section -->
+            <div class="troubleshooting-section">
+                <h3 class="section-title">Troubleshooting</h3>
+                <div class="troubleshooting-grid">
+                    <div class="trouble-item">
+                        <div class="trouble-icon">🔧</div>
+                        <div class="trouble-content">
+                            <h4>Common Issues</h4>
+                            <p>Solutions to frequently encountered problems</p>
+                            <a href="#" class="trouble-link" onclick="openTroubleshooting('common-issues')">View Solutions →</a>
+                        </div>
+                    </div>
+                    <div class="trouble-item">
+                        <div class="trouble-icon">📱</div>
+                        <div class="trouble-content">
+                            <h4>Performance Issues</h4>
+                            <p>Optimize Instaflow for better performance</p>
+                            <a href="#" class="trouble-link" onclick="openTroubleshooting('performance')">View Solutions →</a>
+                        </div>
+                    </div>
+                    <div class="trouble-item">
+                        <div class="trouble-icon">💻</div>
+                        <div class="trouble-content">
+                            <h4>Hardware Compatibility</h4>
+                            <p>Ensure your system meets requirements</p>
+                            <a href="#" class="trouble-link" onclick="openTroubleshooting('hardware')">View Solutions →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Resources Section -->
+            <div class="community-section">
+                <h3 class="section-title">Community Resources</h3>
+                <div class="community-grid">
+                    <a href="#" class="community-item" onclick="openCommunity('forum')">
+                        <div class="community-icon">💬</div>
+                        <div class="community-content">
+                            <h4>Community Forum</h4>
+                            <p>Connect with other Instaflow users and share experiences</p>
+                        </div>
+                        <span class="community-arrow">→</span>
+                    </a>
+                    <a href="#" class="community-item" onclick="openCommunity('discord')">
+                        <div class="community-icon">🎮</div>
+                        <div class="community-content">
+                            <h4>Discord Server</h4>
+                            <p>Join our Discord for real-time support and discussions</p>
+                        </div>
+                        <span class="community-arrow">→</span>
+                    </a>
+                    <a href="#" class="community-item" onclick="openCommunity('github')">
+                        <div class="community-icon">📝</div>
+                        <div class="community-content">
+                            <h4>GitHub Repository</h4>
+                            <p>Contribute to Instaflow development and report issues</p>
+                        </div>
+                        <span class="community-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3 class="footer-logo-text">Instaflow</h3>
+                </div>
+                <div class="footer-links">
+                    <a href="#features" class="footer-link">Features</a>
+                    <a href="#download" class="footer-link">Download</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2024 Instaflow. Professional Screen Projection Software.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Decorative lab bubbles -->
+    <div class="lab-bubbles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <script src="guide.js"></script>
+    
+    <script>
+        // Logo click handler for navigation
+        function handleLogoClick() {
+            console.log('Logo clicked, navigating to home page');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

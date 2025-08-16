@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instaflow - Automation Software</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="lab-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+</head>
+<body class="lab-theme">
+    <!-- Loader Overlay -->
+    <div id="loader-overlay" class="loader-overlay">
+        <!-- Loader Background Elements -->
+        <div class="loader-background">
+            <div class="background-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <div class="background-stars">
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+                <div class="star-bg">★</div>
+            </div>
+        </div>
+        <div class="loader-container">
+            <div id="lottie-container" class="lottie-container"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="main-content hidden">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="#" class="logo-link" onclick="scrollToTop(); return false;">
+                        <h2 class="logo-text">Instaflow</h2>
+                    </a>
+                </div>
+                            <div class="nav-links">
+                <a href="features-new.html" class="nav-link">Features</a>
+                <a href="download.html" class="nav-link">Download</a>
+                <a href="guide.html" class="nav-link">Guide</a>
+                
+                <a href="partners.html" class="nav-link">Partners</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
+            </div>
+                <div class="nav-auth">
+                    <!-- Guest State (when not logged in) -->
+                    <div class="auth-buttons guest-state">
+                        <a href="auth.html" class="auth-btn signin-btn">Sign In</a>
+                        <a href="auth.html?form=signup" class="auth-btn signup-btn">Sign Up</a>
+                    </div>
+                    
+                    <!-- Logged In State (when user is authenticated) -->
+                    <div class="auth-buttons logged-in-state" style="display: none;">
+                        <div class="profile-menu">
+                            <button class="profile-btn" onclick="toggleProfileMenu()">
+                                <span class="profile-avatar">👤</span>
+                                <span class="profile-name">User</span>
+                                <span class="profile-arrow">▼</span>
+                            </button>
+                            <div class="profile-dropdown" id="profile-dropdown">
+                                                            <a href="profile.html" class="dropdown-item">
+                                <span class="item-icon">👤</span>
+                                Profile
+                            </a>
+                            <a href="admin-dashboard.html" class="dropdown-item admin-only" style="display: none;">
+                                <span class="item-icon">📊</span>
+                                Dashboard
+                            </a>
+                                <a href="#" class="dropdown-item">
+                                    <span class="item-icon">💳</span>
+                                    Billing
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item logout-btn" onclick="handleLogout()">
+                                    <span class="item-icon">🚪</span>
+                                    Sign Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-container image-right">
+                <!-- Left Content -->
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="title-normal">Automate Your</span>
+                        <span class="title-highlight">Instagram</span>
+                        <span class="title-normal">Growth</span>
+                    </h1>
+                    
+                    <p class="hero-description">
+                        Science‑lab grade Instagram automation. Schedule posts and stories, auto‑DM, generate AI captions, and target real growth — all with safe, human‑like actions and brilliant reporting.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <div class="hero-buttons-row">
+                            <a href="checkout.html?plan=professional" class="hero-btn primary" id="hero-cta-btn">
+                                <span class="btn-icon">▶</span>
+                                <span class="btn-text">GET GLASS GRAM</span>
+                            </a>
+                            <button class="hero-btn secondary">
+                                <span class="btn-icon">🖥️</span>
+                                <span class="btn-text">View Demo</span>
+                            </button>
+                        </div>
+                         
+                    </div>
+                </div>
+                <!-- Right Image -->
+                <div class="hero-image">
+                    <img src="Hero2.png" alt="Glass Gram hero illustration" class="hero-img">
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <div class="features-container">
+                    <div class="features-header">
+                        <h2 class="features-title">Why Choose <span class="highlight-text">Instaflow</span>?</h2>
+                        <p class="features-subtitle">Full‑stack Instagram automation that’s safe, powerful, and easy</p>
+                </div>
+                
+                    <div class="features-showcase">
+                    <!-- Feature 1: Ultra-Low Latency -->
+                    <div class="feature-showcase-item" data-feature="latency">
+                        <div class="feature-visual">
+                            <div class="feature-circle">
+                                <div class="feature-icon-wrapper">
+                                    <span class="feature-icon">⚡</span>
+                                    <div class="icon-glow"></div>
+                                </div>
+                                <div class="feature-pulse-ring"></div>
+                                <div class="feature-pulse-ring"></div>
+                                <div class="feature-pulse-ring"></div>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <div class="feature-header">
+                                <h3 class="feature-title">Smart Scheduler</h3>
+                            </div>
+                            <p class="feature-description">Auto-post Reels, carousels, and stories at the best time with AI captions and hashtags.</p>
+                            <div class="feature-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">+38%</span>
+                                    <span class="stat-label">Avg. Reach</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">10x</span>
+                                    <span class="stat-label">Faster Posting</span>
+                                </div>
+                            </div>
+                            <div class="feature-action">
+                                <button class="feature-btn" onclick="showFeatureDemo('latency')">
+                                    <span class="btn-text">See in Action</span>
+                                    <span class="btn-arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2: HD Quality -->
+                    <div class="feature-showcase-item" data-feature="quality">
+                        <div class="feature-visual">
+                            <div class="feature-circle">
+                                <div class="feature-icon-wrapper">
+                                    <span class="feature-icon">🎯</span>
+                                    <div class="icon-glow"></div>
+                                </div>
+                                <div class="quality-indicator">
+                                    <div class="quality-bar"></div>
+                                    <div class="quality-bar"></div>
+                                    <div class="quality-bar"></div>
+                                    <div class="quality-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <div class="feature-header">
+                                <h3 class="feature-title">AI Content</h3>
+                            </div>
+                            <p class="feature-description">Generate captions, first comments, and hashtag sets tuned to your niche and tone.</p>
+                            <div class="feature-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">+55%</span>
+                                    <span class="stat-label">Engagement</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">Auto</span>
+                                    <span class="stat-label">Hashtags</span>
+                                </div>
+                            </div>
+                            <div class="feature-action">
+                                <button class="feature-btn" onclick="showFeatureDemo('quality')">
+                                    <span class="btn-text">See in Action</span>
+                                    <span class="btn-arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3: Easy Connection -->
+                    <div class="feature-showcase-item" data-feature="connection">
+                        <div class="feature-visual">
+                            <div class="feature-circle">
+                                <div class="feature-icon-wrapper">
+                                    <span class="feature-icon">🔗</span>
+                                    <div class="icon-glow"></div>
+                                </div>
+                                <div class="connection-animation">
+                                    <div class="device-phone">📱</div>
+                                    <div class="connection-line"></div>
+                                    <div class="device-pc">🖥️</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <div class="feature-header">
+                                <h3 class="feature-title">Auto DMs & Flows</h3>
+                            </div>
+                            <p class="feature-description">Auto‑reply to comments and DMs, route leads, and send drip messages with templates.</p>
+                            <div class="feature-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">24/7</span>
+                                    <span class="stat-label">Inbox</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">Flows</span>
+                                    <span class="stat-label">Templates</span>
+                                </div>
+                            </div>
+                            <div class="feature-action">
+                                <button class="feature-btn" onclick="showFeatureDemo('connection')">
+                                    <span class="btn-text">See in Action</span>
+                                    <span class="btn-arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 4: Gaming Optimized -->
+                    <div class="feature-showcase-item" data-feature="gaming">
+                        <div class="feature-visual">
+                            <div class="feature-circle">
+                                <div class="feature-icon-wrapper">
+                                    <span class="feature-icon">🎮</span>
+                                    <div class="icon-glow"></div>
+                                </div>
+                                <div class="gaming-indicator">
+                                    <div class="game-controller">🎮</div>
+                                    <div class="performance-dots">
+                                        <div class="dot"></div>
+                                        <div class="dot"></div>
+                                        <div class="dot"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <div class="feature-header">
+                                <h3 class="feature-title">Growth Tools</h3>
+                            </div>
+                            <p class="feature-description">Target by niche, hashtags, and competitors. Auto-like, save, and welcome new followers safely.</p>
+                            <div class="feature-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">+2–5x</span>
+                                    <span class="stat-label">Profile Visits</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">Safe</span>
+                                    <span class="stat-label">Limits</span>
+                                </div>
+                            </div>
+                            <div class="feature-action">
+                                <button class="feature-btn" onclick="showFeatureDemo('gaming')">
+                                    <span class="btn-text">See in Action</span>
+                                    <span class="btn-arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 5: Recording & Streaming -->
+                    <div class="feature-showcase-item" data-feature="recording">
+                        <div class="feature-visual">
+                            <div class="feature-circle">
+                                <div class="feature-icon-wrapper">
+                                    <span class="feature-icon">📊</span>
+                                    <div class="icon-glow"></div>
+                                </div>
+                                <div class="recording-indicator">
+                                    <div class="record-button">
+                                        <div class="record-dot"></div>
+                                    </div>
+                                    <div class="audio-waves">
+                                        <div class="wave"></div>
+                                        <div class="wave"></div>
+                                        <div class="wave"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <div class="feature-header">
+                                <h3 class="feature-title">Team & Clients</h3>
+                            </div>
+                            <p class="feature-description">Multi‑account workspace, approvals, and client portals with branded reports.</p>
+                            <div class="feature-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">∞</span>
+                                    <span class="stat-label">Accounts</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">Roles</span>
+                                    <span class="stat-label">& Approvals</span>
+                                </div>
+                            </div>
+                            <div class="feature-action">
+                                <button class="feature-btn" onclick="showFeatureDemo('recording')">
+                                    <span class="btn-text">See in Action</span>
+                                    <span class="btn-arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 6: Secure & Private -->
+                    <div class="feature-showcase-item" data-feature="security">
+                        <div class="feature-visual">
+                            <div class="feature-circle">
+                                <div class="feature-icon-wrapper">
+                                    <span class="feature-icon">🛡️</span>
+                                    <div class="icon-glow"></div>
+                                </div>
+                                <div class="security-indicator">
+                                    <div class="shield-icon">🛡️</div>
+                                    <div class="security-rings">
+                                        <div class="ring"></div>
+                                        <div class="ring"></div>
+                                        <div class="ring"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <div class="feature-header">
+                                <h3 class="feature-title">Secure & Compliant</h3>
+                            </div>
+                            <p class="feature-description">2FA, device simulation, and activity throttling. Your data stays private and exportable.</p>
+                            <div class="feature-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">2FA</span>
+                                    <span class="stat-label">Auth</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">Safe</span>
+                                    <span class="stat-label">Limits</span>
+                                </div>
+                            </div>
+                            <div class="feature-action">
+                                <button class="feature-btn" onclick="showFeatureDemo('security')">
+                                    <span class="btn-text">See in Action</span>
+                                    <span class="btn-arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Guide Section -->
+        <section id="guide" class="guide-section">
+            <div class="guide-container">
+                <div class="guide-header">
+                    <h2 class="guide-title">Get Started in <span class="highlight-text">4 Steps</span></h2>
+                    <p class="guide-subtitle">Transform your setup experience with our streamlined process</p>
+                </div>
+                
+                <div class="guide-timeline">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="guide-step">
+                        <div class="step-visual">
+                            <div class="step-circle">
+                                <span class="step-number">1</span>
+                                <div class="step-pulse"></div>
+                            </div>
+                            <div class="step-connector"></div>
+                        </div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <div class="step-icon">📥</div>
+                                <h3 class="step-title">Download & Install</h3>
+                            </div>
+                            <p class="step-description">Get Instaflow on your PC with our smart installer that handles everything automatically.</p>
+                            <div class="step-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 25%"></div>
+                                </div>
+                                <span class="progress-text">25% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-step">
+                        <div class="step-visual">
+                            <div class="step-circle">
+                                <span class="step-number">2</span>
+                                <div class="step-pulse"></div>
+                            </div>
+                            <div class="step-connector"></div>
+                        </div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <div class="step-icon">⚙️</div>
+                                <h3 class="step-title">Enable Developer Mode</h3>
+                            </div>
+                            <p class="step-description">Unlock your Android's potential by enabling USB debugging in just a few taps.</p>
+                            <div class="step-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 50%"></div>
+                                </div>
+                                <span class="progress-text">50% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-step">
+                        <div class="step-visual">
+                            <div class="step-circle">
+                                <span class="step-number">3</span>
+                                <div class="step-pulse"></div>
+                            </div>
+                            <div class="step-connector"></div>
+                        </div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <div class="step-icon">🔗</div>
+                                <h3 class="step-title">Connect & Sync</h3>
+                            </div>
+                            <p class="step-description">Link your devices seamlessly via USB or WiFi for instant mirroring capability.</p>
+                            <div class="step-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 75%"></div>
+                                </div>
+                                <span class="progress-text">75% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-step">
+                        <div class="step-visual">
+                            <div class="step-circle">
+                                <span class="step-number">4</span>
+                                <div class="step-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <div class="step-icon">🎯</div>
+                                <h3 class="step-title">Start Mirroring</h3>
+                            </div>
+                            <p class="step-description">Launch Instaflow and experience professional-grade screen projection instantly.</p>
+                            <div class="step-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 100%"></div>
+                                </div>
+                                <span class="progress-text">100% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="guide-cta">
+                    <button class="guide-cta-btn" onclick="showGuideModal()">
+                        <span class="btn-glow"></span>
+                        <span class="btn-content">
+                            <span class="btn-icon">📖</span>
+                            <span class="btn-text">View Complete Guide</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing-section">
+            <div class="pricing-container">
+                <div class="pricing-header">
+                    <h2 class="pricing-title">Choose Your <span class="highlight-text">Plan</span></h2>
+                    <p class="pricing-subtitle">Flexible pricing options to suit your needs</p>
+                </div>
+                
+                <div class="pricing-cards">
+                    <!-- Loading state for subscription plans -->
+                    <div class="pricing-loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading subscription plans...</p>
+                    </div>
+                    
+                    <!-- Dynamic pricing cards will be loaded here from Supabase -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq-section">
+            <div class="faq-container">
+                <div class="faq-header">
+                        <h2 class="faq-title">Frequently Asked <span class="highlight-text">Questions</span></h2>
+                    <p class="faq-subtitle">Everything you need to know about Instaflow automation</p>
+                </div>
+                
+                <div class="faq-grid">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item" data-faq="1">
+                        <div class="faq-question">
+                            <div class="faq-icon">
+                                <span class="faq-icon-text">⚡</span>
+                                <div class="faq-icon-glow"></div>
+                            </div>
+                            <h3 class="faq-question-text">Is Instaflow safe for my account?</h3>
+                            <div class="faq-toggle">
+                                <span class="toggle-line"></span>
+                                <span class="toggle-line"></span>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="answer-content">
+                                <p>Instaflow uses human-like timing, device simulation, and rate limits aligned with platform best practices. You control speed profiles, warm-up periods, and daily caps so activity stays natural.</p>
+                                <div class="answer-features">
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">⚡</span>
+                                        <span>Instant connection</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">🎯</span>
+                                        <span>HD quality output</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">🔒</span>
+                                        <span>Secure & private</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item" data-faq="2">
+                        <div class="faq-question">
+                            <div class="faq-icon">
+                                <span class="faq-icon-text">📱</span>
+                                <div class="faq-icon-glow"></div>
+                            </div>
+                            <h3 class="faq-question-text">What can I automate?</h3>
+                            <div class="faq-toggle">
+                                <span class="toggle-line"></span>
+                                <span class="toggle-line"></span>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="answer-content">
+                                <p>Schedule posts/stories, auto‑DM new followers, reply to comments, send keyword triggers, welcome leads, and run growth interactions (like/save/follow/unfollow) within safe ranges.</p>
+                                <div class="answer-features">
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">📱</span>
+                                        <span>Android 5.0+</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">🖥️</span>
+                                        <span>Windows 10/11</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">🍎</span>
+                                        <span>macOS 10.14+</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item" data-faq="3">
+                        <div class="faq-question">
+                            <div class="faq-icon">
+                                <span class="faq-icon-text">🎁</span>
+                                <div class="faq-icon-glow"></div>
+                            </div>
+                            <h3 class="faq-question-text">Do you offer a free trial?</h3>
+                            <div class="faq-toggle">
+                                <span class="toggle-line"></span>
+                                <span class="toggle-line"></span>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="answer-content">
+                                <p>Yes—get 7 days free with all features. No credit card required. Cancel anytime during the trial.</p>
+                                <div class="answer-features">
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">🎁</span>
+                                        <span>7-day free trial</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">💳</span>
+                                        <span>No credit card</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">✨</span>
+                                        <span>Full features</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item" data-faq="4">
+                        <div class="faq-question">
+                            <div class="faq-icon">
+                                <span class="faq-icon-text">🎬</span>
+                                <div class="faq-icon-glow"></div>
+                            </div>
+                            <h3 class="faq-question-text">Can multiple accounts be managed?</h3>
+                            <div class="faq-toggle">
+                                <span class="toggle-line"></span>
+                                <span class="toggle-line"></span>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="answer-content">
+                                <p>Yes. Create workspaces, invite teammates or clients, assign roles, and approve content before publishing. Generate branded reports automatically.</p>
+                                <div class="answer-features">
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">🎬</span>
+                                        <span>4K recording</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">🎵</span>
+                                        <span>Audio included</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">📹</span>
+                                        <span>Built-in feature</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item" data-faq="5">
+                        <div class="faq-question">
+                            <div class="faq-icon">
+                                <span class="faq-icon-text">🔐</span>
+                                <div class="faq-icon-glow"></div>
+                            </div>
+                            <h3 class="faq-question-text">How secure is my data?</h3>
+                            <div class="faq-toggle">
+                                <span class="toggle-line"></span>
+                                <span class="toggle-line"></span>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="answer-content">
+                                <p>Your privacy and security are our top priorities. We use 256‑bit encryption, 2FA, and store only what’s necessary. Export or delete your data anytime.</p>
+                                <div class="answer-features">
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">🔐</span>
+                                        <span>256-bit encryption</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">🏠</span>
+                                        <span>Local processing</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">🛡️</span>
+                                        <span>Zero data collection</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 6 -->
+                    <div class="faq-item" data-faq="6">
+                        <div class="faq-question">
+                            <div class="faq-icon">
+                                <span class="faq-icon-text">💬</span>
+                                <div class="faq-icon-glow"></div>
+                            </div>
+                            <h3 class="faq-question-text">What if I need technical support?</h3>
+                            <div class="faq-toggle">
+                                <span class="toggle-line"></span>
+                                <span class="toggle-line"></span>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="answer-content">
+                                <p>We provide comprehensive technical support for all users. Free trial users get email support, while Professional and Enterprise users receive priority support with faster response times and dedicated assistance.</p>
+                                <div class="answer-features">
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">📧</span>
+                                        <span>Email support</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">⚡</span>
+                                        <span>Priority response</span>
+                                    </div>
+                                    <div class="answer-feature">
+                                        <span class="feature-dot">👨‍💻</span>
+                                        <span>Expert assistance</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-cta">
+                    <div class="faq-cta-content">
+                        <h3 class="faq-cta-title">Still have <span class="highlight-text">questions</span>?</h3>
+                        <p class="faq-cta-text">Our support team is here to help you get the most out of Instaflow</p>
+                        <button class="faq-cta-btn">
+                            <span class="btn-icon">💬</span>
+                            Contact Support
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Section -->
+        <section id="download" class="download-section">
+            <div class="download-container">
+                <div class="download-header">
+                    <h2 class="download-title">Ready to Grow on <span class="highlight-text">Instagram</span>?</h2>
+                    <p class="download-description">Try Instaflow free. Schedule content, automate DMs, and scale engagement—safely.</p>
+                </div>
+                <div class="download-buttons">
+                    <a href="checkout.html?plan=trial&price=0&period=7days" class="download-btn-main android">
+                        <span class="play-icon">▶</span>
+                        Get Now
+                    </a>
+                    <button class="download-btn-main ios">
+                        <span class="apple-icon">📱</span>
+                        View Demo
+                    </button>
+                </div>
+                <p class="download-disclaimer">Free trial available • Professional features unlocked</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <h3 class="footer-logo-text">Instaflow</h3>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#features" class="footer-link">Features</a>
+                        <a href="#download" class="footer-link">Download</a>
+                        <a href="guide.html" class="footer-link">Guide</a>
+                        <a href="pricing.html" class="footer-link">Pricing</a>
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Terms of Service</a>
+                    </div>
+                </div>
+                <div class="footer-copyright">
+                    <p>© 2024 Instaflow. Professional Screen Projection Software.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Decorative lab bubbles -->
+    <div class="lab-bubbles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <script src="script.js"></script>
+    <script src="subscription-plans.js"></script>
+    
+    <!-- Profile Management Script -->
+    <script>
+        // Authentication State Management
+        function switchToLoggedInState(email) {
+            // Hide guest state, show logged in state
+            document.querySelector('.guest-state').style.display = 'none';
+            document.querySelector('.logged-in-state').style.display = 'flex';
+            
+            // Update profile name with email
+            const profileName = document.querySelector('.profile-name');
+            if (profileName) {
+                profileName.textContent = email.split('@')[0]; // Show username part of email
+            }
+        }
+
+        function switchToGuestState() {
+            // Show guest state, hide logged in state
+            document.querySelector('.guest-state').style.display = 'flex';
+            document.querySelector('.logged-in-state').style.display = 'none';
+        }
+
+        function checkAuthState() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (isLoggedIn && userEmail) {
+                switchToLoggedInState(userEmail);
+            } else {
+                switchToGuestState();
+            }
+        }
+
+        // Profile Menu Functions
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profile-dropdown');
+            const profileBtn = document.querySelector('.profile-btn');
+            
+            dropdown.classList.toggle('show');
+            profileBtn.classList.toggle('active');
+        }
+
+        function handleLogout() {
+            // Show loading state
+            const profileBtn = document.querySelector('.profile-btn');
+            const originalText = profileBtn.innerHTML;
+            profileBtn.innerHTML = '<span class="profile-avatar">⏳</span> <span class="profile-name">Signing Out...</span>';
+            
+            // Simulate logout process
+            setTimeout(() => {
+                // Switch to guest state
+                switchToGuestState();
+                
+                // Reset profile button
+                profileBtn.innerHTML = originalText;
+                
+                // Close dropdown
+                document.getElementById('profile-dropdown').classList.remove('show');
+                profileBtn.classList.remove('active');
+                
+                // Show success message
+                alert('Signed out successfully!');
+            }, 1000);
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const profileMenu = document.querySelector('.profile-menu');
+            const dropdown = document.getElementById('profile-dropdown');
+            
+            if (profileMenu && dropdown && !profileMenu.contains(e.target)) {
+                dropdown.classList.remove('show');
+                document.querySelector('.profile-btn').classList.remove('active');
+            }
+        });
+
+        // Initialize authentication state on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthState();
+            
+            // Animate pricing cards
+            setTimeout(() => {
+                const pricingCards = document.querySelectorAll('.pricing-card');
+                pricingCards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.6s ease-out';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                        card.classList.add('loaded');
+                    }, index * 200);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html> 

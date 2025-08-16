@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partners - Instaflow</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="lab-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="lab-theme">
+    <!-- Background Elements -->
+    <div class="partners-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+        <div class="gradient-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link" onclick="scrollToTop(); return false;">
+                    <h2 class="logo-text">Instaflow</h2>
+                </a>
+            </div>
+                        <div class="nav-links">
+            <a href="features-new.html" class="nav-link">Features</a>
+            <a href="download.html" class="nav-link">Download</a>
+            <a href="guide.html" class="nav-link">Guide</a>
+            
+            <a href="partners.html" class="nav-link">Partners</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
+        </div>
+            <div class="nav-auth">
+                <!-- Guest State (when not logged in) -->
+                <div class="auth-buttons guest-state">
+                    <a href="auth.html" class="auth-btn signin-btn">Sign In</a>
+                    <a href="auth.html?form=signup" class="auth-btn signup-btn">Sign Up</a>
+                </div>
+                
+                <!-- Logged In State (when user is authenticated) -->
+                <div class="auth-buttons logged-in-state" style="display: none;">
+                    <div class="profile-menu">
+                        <button class="profile-btn" onclick="toggleProfileMenu()">
+                            <span class="profile-avatar">👤</span>
+                            <span class="profile-name">User</span>
+                            <span class="profile-arrow">▼</span>
+                        </button>
+                        <div class="profile-dropdown" id="profile-dropdown">
+                                                        <a href="profile.html" class="dropdown-item">
+                            <span class="item-icon">👤</span>
+                            Profile
+                        </a>
+                        <a href="admin-dashboard.html" class="dropdown-item admin-only" style="display: none;">
+                            <span class="item-icon">📊</span>
+                            Dashboard
+                        </a>
+                            <a href="#" class="dropdown-item">
+                                <span class="item-icon">💳</span>
+                                Billing
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item logout-btn" onclick="handleLogout()">
+                                <span class="item-icon">🚪</span>
+                                Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Partner Cards Section -->
+    <section class="partners-section">
+        <div class="container">
+            <!-- Partner Details Cards -->
+            <div class="partner-details-cards">
+                <!-- Partners will be loaded dynamically from Supabase -->
+                <div class="loading-partners">
+                    <p>Loading partners...</p>
+                    <button onclick="testSupabaseConnection()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #00d4ff; color: white; border: none; border-radius: 5px; cursor: pointer;">Test Supabase Connection</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3 class="footer-logo-text">Instaflow</h3>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html#features" class="footer-link">Features</a>
+                    <a href="index.html#download" class="footer-link">Download</a>
+                    <a href="guide.html" class="footer-link">Guide</a>
+                    <a href="#partners" class="footer-link">Partners</a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2024 Instaflow. Professional Instagram Automation Platform.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Decorative lab bubbles -->
+    <div class="lab-bubbles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <script src="supabase-config.js"></script>
+    <script src="partners-dynamic.js"></script>
+    
+    <script>
+        // Scroll to top function for logo click
+        function scrollToTop() {
+            console.log('Logo clicked, navigating to home page');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
