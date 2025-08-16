@@ -315,16 +315,360 @@ body.lab-theme {
 /* Make individual plan cards consistent */
 .plan-card {
     height: 100%;
-    min-height: 400px;
+    min-height: 500px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding: 2rem;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(20, 255, 114, 0.1);
     border-radius: 16px;
     transition: all 0.4s ease;
+    position: relative;
+}
+
+/* Plan content wrapper to push button to bottom */
+.plan-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Plan features container to take remaining space */
+.plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    flex: 1;
+    min-height: 200px;
+}
+
+/* Plan actions container fixed at bottom */
+.plan-actions {
+    text-align: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Fix for the actual pricing cards used in the JavaScript */
+.pricing-card {
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(20, 255, 114, 0.1);
+    border-radius: 16px;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+/* Card header section */
+.card-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* Plan price section */
+.plan-price {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* Plan features section - takes remaining space */
+.plan-features {
+    flex: 1;
+    min-height: 200px;
+    margin-bottom: 1.5rem;
+}
+
+/* Pricing button - fixed at bottom */
+.pricing-btn {
+    margin-top: auto !important;
+    padding: 0.8rem 1.5rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    border: none !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    background: linear-gradient(45deg, var(--lab-neon), var(--lab-gold)) !important;
+    color: #000000 !important;
+    box-shadow: 0 6px 20px rgba(20, 255, 114, 0.4) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Force button positioning with !important */
+.pricing-cards .pricing-card .pricing-btn,
+.pricing-card .pricing-btn {
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
+    align-self: flex-end !important;
+}
+
+/* Ensure the pricing card structure forces button to bottom */
+.pricing-cards .pricing-card,
+.pricing-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    min-height: 500px !important;
+    position: relative !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* Override any conflicting styles from other CSS files */
+.pricing-cards .pricing-card *,
+.pricing-card * {
+    box-sizing: border-box !important;
+}
+
+/* Ensure the card maintains proper dimensions */
+.pricing-cards .pricing-card {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Force all cards in the grid to have equal height */
+.pricing-cards {
+    align-items: stretch !important;
+}
+
+.pricing-cards .pricing-card {
+    height: 100% !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Prevent any dynamic changes to button positioning */
+.pricing-cards .pricing-card .pricing-btn {
+    will-change: auto !important;
+    backface-visibility: visible !important;
+    perspective: none !important;
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    margin-top: auto !important;
+    padding: 0.8rem 1.5rem !important;
+}
+
+/* Force the button to be the last element and stick to bottom */
+.pricing-cards .pricing-card .pricing-btn:last-child,
+.pricing-card .pricing-btn:last-child {
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+/* Critical: Ensure all direct children of pricing-card are properly positioned */
+.pricing-cards .pricing-card > *,
+.pricing-card > * {
+    flex-shrink: 0;
+}
+
+.pricing-cards .pricing-card .plan-features,
+.pricing-card .plan-features {
+    flex: 1 !important;
+    flex-grow: 1 !important;
+    min-height: 200px !important;
+    margin-bottom: 1.5rem !important;
+    list-style: none !important;
+    padding: 0 !important;
+}
+
+/* Override any conflicting styles from main styles.css */
+.pricing-cards .pricing-card .plan-features *,
+.pricing-card .plan-features * {
+    flex-shrink: 0 !important;
+}
+
+/* Force the layout to work with !important declarations */
+.pricing-cards .pricing-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    min-height: 620px !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+    height: 100% !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.pricing-cards .pricing-card .card-header,
+.pricing-cards .pricing-card .plan-price {
+    flex-shrink: 0 !important;
+}
+
+.pricing-cards .pricing-card .plan-features {
+    flex: 1 !important;
+    flex-grow: 1 !important;
+    flex-shrink: 1 !important;
+    min-height: 200px !important;
+}
+
+.pricing-cards .pricing-card .pricing-btn {
+    flex-shrink: 0 !important;
+    margin-top: auto !important;
+    align-self: flex-end !important;
+}
+
+/* Use flexbox for proper text flow and button positioning */
+.pricing-cards .pricing-card {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.pricing-cards .pricing-card .pricing-btn {
+    position: static !important;
+    margin-top: auto !important;
+    width: 100% !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    flex-shrink: 0 !important;
+    align-self: stretch !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Ensure features section takes remaining space without overlapping */
+.pricing-cards .pricing-card .plan-features {
+    margin-bottom: 1.5rem !important;
+    flex: 1 !important;
+    flex-grow: 1 !important;
+    min-height: 420px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+}
+
+/* Handle both JavaScript-generated and fallback pricing cards */
+.pricing-cards .pricing-card.free,
+.pricing-cards .pricing-card.professional,
+.pricing-cards .pricing-card.enterprise {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    min-height: 620px !important;
+    position: relative !important;
+    height: 100% !important;
+    overflow: visible !important;
+}
+
+.pricing-cards .pricing-card.free .pricing-btn,
+.pricing-cards .pricing-card.professional .pricing-btn,
+.pricing-cards .pricing-card.enterprise .pricing-btn {
+    position: static !important;
+    margin-top: auto !important;
+    width: 100% !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    flex-shrink: 0 !important;
+}
+
+/* Force header and price sections to not grow */
+.pricing-cards .pricing-card .card-header,
+.pricing-cards .pricing-card .plan-price,
+.pricing-card .card-header,
+.pricing-card .plan-price {
+    flex-shrink: 0 !important;
+    margin-bottom: 1.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+}
+
+/* Force the content area to expand and push button down */
+.pricing-cards .pricing-card .card-header,
+.pricing-cards .pricing-card .plan-price {
+    flex-shrink: 0 !important;
+}
+
+.pricing-cards .pricing-card .plan-features {
+    flex: 1 !important;
+    flex-grow: 1 !important;
+    flex-shrink: 1 !important;
+    min-height: 420px !important;
+}
+
+/* Ensure button is always at the bottom */
+.pricing-cards .pricing-card .pricing-btn {
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
+}
+
+
+
+.pricing-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(20, 255, 114, 0.6);
+}
+
+/* Button text and arrow */
+.btn-text {
+    font-weight: 600;
+}
+
+.btn-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.pricing-btn:hover .btn-arrow {
+    transform: translateX(3px);
+}
+
+/* Popular badge styling */
+.popular-badge {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: linear-gradient(45deg, var(--lab-neon), var(--lab-gold));
+    color: #000000;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(20, 255, 114, 0.4);
+    z-index: 10;
+    white-space: nowrap;
+    min-width: 140px;
+    text-align: center;
+}
+
+/* Plan icon styling */
+.plan-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+    text-align: center;
 }
 
 .pricing-loading {
@@ -448,6 +792,7 @@ body.lab-theme {
     border-bottom: none;
 }
 
+/* Feature items for the JavaScript-generated cards */
 .feature-item {
     display: flex;
     align-items: center;
@@ -473,10 +818,14 @@ body.lab-theme {
     flex-shrink: 0;
 }
 
-.feature-item span:last-child {
+.feature-text {
     color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
+    word-wrap: break-word;
     font-size: 0.8rem;
+    flex: 1 !important;
+    min-width: 0 !important;
+    overflow-wrap: break-word !important;
 }
 
 /* Plan Actions */
@@ -597,7 +946,7 @@ body.lab-theme {
     grid-template-columns: 2fr 1fr 1fr 1fr;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     transition: all 0.3s ease;
-    padding: 0;
+    padding: 10px;
 }
 
 .table-row:hover {
@@ -623,8 +972,8 @@ body.lab-theme {
 
 .feature-name {
     justify-content: flex-start;
-    color: var(--lab-gold);
-    font-weight: 600;
+    color:white;
+    font-weight: 400;
     font-size: 1.15rem;
     padding-left: 28px;
     text-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
@@ -1203,9 +1552,13 @@ body.lab-theme {
         max-width: 800px;
     }
     
-    .plan-card {
-        min-height: 350px;
+    .plan-card, .pricing-card {
+        min-height: 450px;
         padding: 1.5rem;
+    }
+    
+    .plan-features {
+        min-height: 180px;
     }
 }
 
@@ -1217,9 +1570,13 @@ body.lab-theme {
         max-width: 400px;
     }
     
-    .plan-card {
-        min-height: 300px;
+    .plan-card, .pricing-card {
+        min-height: 400px;
         padding: 1rem;
+    }
+    
+    .plan-features {
+        min-height: 150px;
     }
 }
 
