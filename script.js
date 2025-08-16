@@ -493,13 +493,31 @@ function initializeLoader() {
     const lottieContainer = document.getElementById('lottie-container');
     
     if (loaderOverlay && mainContent && lottieContainer) {
+        // Check if Lottie library is available
+        if (typeof lottie === 'undefined') {
+            console.error('Lottie library not loaded, using fallback spinner');
+            lottieContainer.innerHTML = '<div class="loading-spinner">⚡</div>';
+            // Continue with loading simulation
+            setTimeout(() => {
+                loaderOverlay.style.opacity = '0';
+                loaderOverlay.style.transform = 'scale(0.95)';
+                mainContent.classList.remove('hidden');
+                mainContent.style.opacity = '1';
+                mainContent.style.transform = 'translateY(0)';
+                setTimeout(() => {
+                    loaderOverlay.style.display = 'none';
+                }, 500);
+            }, 4193);
+            return;
+        }
+        
         // Load and play Lottie animation
         const animation = lottie.loadAnimation({
             container: lottieContainer,
             renderer: 'svg',
             loop: true,
             autoplay: true,
-            path: 'sandy.json' // Fixed case-sensitive path
+            path: './Sandy.json' // Fixed case-sensitive path with proper relative path
         });
         
         // Handle animation load
@@ -510,8 +528,31 @@ function initializeLoader() {
         // Handle animation errors
         animation.addEventListener('error', function(error) {
             console.error('Lottie animation error:', error);
-            // Fallback to simple spinner if Lottie fails
-            lottieContainer.innerHTML = '<div class="loading-spinner">🔄</div>';
+            // Try alternative path for production
+            if (error.message.includes('404') || error.message.includes('Failed to fetch')) {
+                console.log('Trying alternative path for production...');
+                try {
+                    const productionAnimation = lottie.loadAnimation({
+                        container: lottieContainer,
+                        renderer: 'svg',
+                        loop: true,
+                        autoplay: true,
+                        path: '/Sandy.json' // Try absolute path for production
+                    });
+                    
+                    productionAnimation.addEventListener('error', function(prodError) {
+                        console.error('Production path also failed:', prodError);
+                        // Final fallback to simple spinner
+                        lottieContainer.innerHTML = '<div class="loading-spinner">⚡</div>';
+                    });
+                } catch (fallbackError) {
+                    console.error('Fallback animation failed:', fallbackError);
+                    lottieContainer.innerHTML = '<div class="loading-spinner">🔄</div>';
+                }
+            } else {
+                // Fallback to simple spinner if Lottie fails
+                lottieContainer.innerHTML = '<div class="loading-spinner">⚡</div>';
+            }
         });
         
         // Simulate loading time
