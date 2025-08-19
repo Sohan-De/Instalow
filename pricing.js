@@ -116,6 +116,15 @@ function handleLogoClick() {
     window.location.href = 'index.html';
 }
 
+// Scroll to top function for logo click on home page
+function scrollToTop() {
+    console.log('Logo clicked, scrolling to top of home page');
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
 // Check admin status and show/hide dashboard link
 async function checkAdminStatus() {
     try {
@@ -297,7 +306,12 @@ function showNotification(message, type = 'info') {
 // Profile menu functionality
 function toggleProfileMenu() {
     const dropdown = document.getElementById('profile-dropdown');
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    const profileBtn = document.querySelector('.profile-btn');
+    
+    if (dropdown) {
+        dropdown.classList.toggle('show');
+        profileBtn.classList.toggle('active');
+    }
 }
 
 // Handle logout
@@ -316,30 +330,65 @@ async function handleLogout() {
 // Authentication state management
 async function checkAuthState() {
     try {
-        if (!window.supabaseClient) return;
+        if (!window.supabaseClient) {
+            // Fallback to localStorage if Supabase is not available
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (isLoggedIn && userEmail) {
+                switchToLoggedInState(userEmail);
+            } else {
+                switchToGuestState();
+            }
+            return;
+        }
         
         const { data: { session } } = await window.supabaseClient.auth.getSession();
         
         if (session?.user) {
             // User is logged in
-            document.querySelector('.guest-state').style.display = 'none';
-            document.querySelector('.logged-in-state').style.display = 'block';
-            
-            // Update profile name
-            const profileName = document.querySelector('.profile-name');
-            if (profileName) {
-                profileName.textContent = session.user.email?.split('@')[0] || 'User';
-            }
+            switchToLoggedInState(session.user.email);
             
             // Check admin status
             await checkAdminStatus();
         } else {
-            // User is not logged in
-            document.querySelector('.guest-state').style.display = 'flex';
-            document.querySelector('.logged-in-state').style.display = 'none';
+            // User is not authenticated
+            switchToGuestState();
         }
     } catch (error) {
         console.error('Error checking auth state:', error);
+        // Fallback to guest state
+        switchToGuestState();
+    }
+}
+
+// Switch to logged in state
+function switchToLoggedInState(email) {
+    // Hide guest state, show logged in state
+    const guestState = document.querySelector('.guest-state');
+    const loggedInState = document.querySelector('.logged-in-state');
+    
+    if (guestState && loggedInState) {
+        guestState.style.display = 'none';
+        loggedInState.style.display = 'flex';
+        
+        // Update profile name with email
+        const profileName = document.querySelector('.profile-name');
+        if (profileName) {
+            profileName.textContent = email.split('@')[0]; // Show username part of email
+        }
+    }
+}
+
+// Switch to guest state
+function switchToGuestState() {
+    // Show guest state, hide logged in state
+    const guestState = document.querySelector('.guest-state');
+    const loggedInState = document.querySelector('.logged-in-state');
+    
+    if (guestState && loggedInState) {
+        guestState.style.display = 'flex';
+        loggedInState.style.display = 'none';
     }
 }
 
@@ -348,8 +397,12 @@ document.addEventListener('click', function(event) {
     const profileMenu = document.querySelector('.profile-menu');
     const dropdown = document.getElementById('profile-dropdown');
     
-    if (!profileMenu?.contains(event.target)) {
-        dropdown.style.display = 'none';
+    if (profileMenu && dropdown && !profileMenu.contains(event.target)) {
+        dropdown.classList.remove('show');
+        const profileBtn = document.querySelector('.profile-btn');
+        if (profileBtn) {
+            profileBtn.classList.remove('active');
+        }
     }
 });
 
@@ -407,6 +460,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // Also listen for Supabase ready event
+    window.addEventListener('supabase-ready', function() {
+        console.log('Supabase ready event received in pricing page');
+        checkAuthState();
+    });
 });
 
 // Hover effects removed - cards are no longer clickable
@@ -496,6 +555,9 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         forceSectionsVisible();
     }, 2000);
+    
+    // Test profile menu functionality
+    testProfileMenu();
     
     // Set initial billing state
     const billingToggle = document.getElementById('billingToggle');

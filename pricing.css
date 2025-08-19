@@ -413,13 +413,13 @@ body.lab-theme {
     overflow: hidden !important;
 }
 
-/* Make the entire pricing card non-clickable */
-.pricing-card {
+/* Make only the pricing plan cards non-clickable, not the navigation */
+.pricing-cards .pricing-card {
     pointer-events: none !important;
 }
 
 /* But allow the button to be clickable */
-.pricing-card .pricing-btn {
+.pricing-cards .pricing-card .pricing-btn {
     pointer-events: auto !important;
 }
 
@@ -1653,14 +1653,12 @@ body.lab-theme {
         min-height: 60px;
         font-size: 1rem;
     }
-}
     
     .plan-btn {
         padding: 0.5rem 1rem;
         font-size: 0.75rem;
         height: 36px;
     }
-}
 
 /* Animation Classes */
 .fade-in {
@@ -1766,4 +1764,32 @@ body.lab-theme {
     -webkit-text-fill-color: transparent !important;
     color: transparent !important;
     animation: titleShine 6s linear infinite !important;
+}
+
+/* Responsive styles for profile menu */
+@media (max-width: 768px) {
+    .profile-dropdown {
+        right: -50px;
+        min-width: 180px;
+    }
+    
+    .profile-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .profile-name {
+        display: none;
+    }
+}
+
+/* Ensure proper z-index for dropdown */
+.profile-dropdown {
+    z-index: 10000;
+}
+
+/* Fix for dropdown positioning */
+.profile-menu {
+    position: relative;
+    z-index: 1000;
 }
