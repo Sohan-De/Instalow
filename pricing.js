@@ -409,22 +409,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Add hover effects for plan cards
-document.addEventListener('DOMContentLoaded', function() {
-    const planCards = document.querySelectorAll('.plan-card');
-    
-    planCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = this.classList.contains('featured') ? 
-                'scale(1.05) translateY(-10px)' : 'translateY(-10px)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = this.classList.contains('featured') ? 
-                'scale(1.05)' : 'translateY(0)';
-        });
-    });
-});
+// Hover effects removed - cards are no longer clickable
 
 // Add ripple effect to buttons
 document.addEventListener('DOMContentLoaded', function() {

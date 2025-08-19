@@ -443,6 +443,32 @@ async function handleFormSubmission(event) {
             // Update user profile with purchased plan
             await updateUserProfileWithPlan(window.selectedPlan);
             
+            // Send payment success email with key
+            try {
+                console.log('📧 Sending payment success email...');
+                const emailResult = await EmailJSFunctions.completePaymentWithKey(
+                    formData.email,
+                    formData.name,
+                    window.selectedPlan.name,
+                    `$${window.selectedPlan.total}`
+                );
+                
+                if (emailResult.success) {
+                    console.log('✅ Emails sent successfully with key:', emailResult.keyValue);
+                    const emailStatus = [];
+                    if (emailResult.userEmailSent) emailStatus.push('User email sent');
+                    if (emailResult.adminEmailSent) emailStatus.push('Admin notified');
+                    
+                    showNotification(`Payment successful! Check your email for your activation key! ${emailStatus.join(', ')}`, 'success');
+                } else {
+                    console.error('❌ Email failed:', emailResult.message);
+                    showNotification(`Payment successful! But email delivery failed. Contact support.`, 'warning');
+                }
+            } catch (emailError) {
+                console.error('❌ Email error:', emailError);
+                showNotification(`Payment successful! But email delivery failed. Contact support.`, 'warning');
+            }
+            
             // Show success notification
             showNotification(`Payment successful! Welcome to ${window.selectedPlan?.name}!`, 'success');
             
@@ -1316,6 +1342,32 @@ async function processConfirmedCryptoPayment() {
         
         // Update user profile with purchased plan
         await updateUserProfileWithPlan(window.selectedPlan);
+        
+        // Send payment success email with key
+        try {
+            console.log('📧 Sending crypto payment success email...');
+            const emailResult = await EmailJSFunctions.completePaymentWithKey(
+                formData.email,
+                formData.name,
+                window.selectedPlan.name,
+                `$${window.selectedPlan.total}`
+            );
+            
+            if (emailResult.success) {
+                console.log('✅ Crypto payment emails sent successfully with key:', emailResult.keyValue);
+                const emailStatus = [];
+                if (emailResult.userEmailSent) emailStatus.push('User email sent');
+                if (emailResult.adminEmailSent) emailStatus.push('Admin notified');
+                
+                showNotification(`Crypto payment successful! Check your email for your activation key! ${emailStatus.join(', ')}`, 'success');
+            } else {
+                console.error('❌ Crypto payment email failed:', emailResult.message);
+                showNotification(`Crypto payment successful! But email delivery failed. Contact support.`, 'warning');
+            }
+        } catch (emailError) {
+            console.error('❌ Crypto payment email error:', emailError);
+            showNotification(`Crypto payment successful! But email delivery failed. Contact support.`, 'warning');
+        }
         
         // Show success notification
         showNotification(`Crypto payment successful! Welcome to ${window.selectedPlan?.name}!`, 'success');

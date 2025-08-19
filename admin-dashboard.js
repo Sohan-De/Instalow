@@ -306,6 +306,9 @@ function setupEventListeners() {
             filterPartnersByStatus(this.value);
         });
     }
+    
+    // Setup keys event listeners
+    setupKeysEventListeners();
 }
 
 // Tab switching functionality
@@ -346,6 +349,9 @@ function loadTabData(tabName) {
         case 'partners':
             loadPartners();
             break;
+        case 'keys':
+            loadKeys();
+            break;
     }
 }
 
@@ -354,6 +360,7 @@ function loadDashboardData() {
     loadUsers();
     loadSubscriptionPlans();
     loadPartners();
+    loadKeys();
 }
 
 // Load users data
@@ -3370,4 +3377,557 @@ function closeAddPlanModal() {
 function handleLogoClick() {
     console.log('Logo clicked, navigating to home page');
     window.location.href = 'index.html';
+}
+
+// ========================================
+// KEYS MANAGEMENT FUNCTIONS
+// ========================================
+
+// Load keys data
+async function loadKeys() {
+    try {
+        console.log('🔑 Loading keys...');
+        
+        const { data: keys, error } = await supabaseClient
+            .from('keys')
+            .select('*')
+            .order('key_id', { ascending: true });
+            
+        if (error) {
+            console.error('❌ Failed to load keys:', error);
+            showNotification('Failed to load keys: ' + error.message, 'error');
+            return;
+        }
+        
+        console.log('✅ Keys loaded:', keys);
+        displayKeys(keys);
+        updateKeysSummary(keys);
+        
+    } catch (error) {
+        console.error('❌ Load keys failed:', error);
+        showNotification('Failed to load keys: ' + error.message, 'error');
+    }
+}
+
+// Display keys in table
+function displayKeys(keys) {
+    const tbody = document.getElementById('keys-table-body');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+    
+    if (!keys || keys.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" class="no-data">
+                    <div class="no-data-content">
+                        <span class="no-data-icon">🔑</span>
+                        <p>No keys found</p>
+                        <button class="action-btn primary" onclick="addNewKey()">
+                            <span class="btn-icon">➕</span>
+                            Add First Key
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    keys.forEach(key => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>
+                <div class="key-id">${key.key_id}</div>
+            </td>
+            <td>
+                <div class="key-value">
+                    <code>${key.key_value}</code>
+                    <button class="copy-btn" onclick="copyToClipboard('${key.key_value}')" title="Copy key">
+                        <span class="btn-icon">📋</span>
+                    </button>
+                </div>
+            </td>
+            <td>
+                <span class="status-badge ${key.marked_as_used ? 'used' : 'available'}">
+                    ${key.marked_as_used ? 'Used' : 'Available'}
+                </span>
+            </td>
+            <td>
+                <div class="date-info">
+                    ${new Date(key.created_at).toLocaleDateString()}
+                </div>
+            </td>
+            <td>
+                <div class="action-buttons">
+                    <button class="action-btn small secondary" onclick="editKey(${key.key_id})" title="Edit key">
+                        <span class="btn-icon">✏️</span>
+                    </button>
+                    <button class="action-btn small danger" onclick="deleteKey(${key.key_id})" title="Delete key">
+                        <span class="btn-icon">🗑️</span>
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+// Update keys summary
+function updateKeysSummary(keys) {
+    const totalKeys = keys.length;
+    const availableKeys = keys.filter(key => !key.marked_as_used).length;
+    const usedKeys = keys.filter(key => key.marked_as_used).length;
+    
+    document.getElementById('total-keys-count').textContent = totalKeys;
+    document.getElementById('available-keys-count').textContent = availableKeys;
+    document.getElementById('used-keys-count').textContent = usedKeys;
+}
+
+// Add new key
+async function addNewKey() {
+    try {
+        console.log('🔑 Opening add key modal...');
+        
+        // Show add key modal
+        showAddKeyModal();
+        
+    } catch (error) {
+        console.error('❌ Add new key failed:', error);
+        showNotification('Failed to open add key modal: ' + error.message, 'error');
+    }
+}
+
+// Show add key modal
+function showAddKeyModal() {
+    const modalHTML = `
+        <div id="addKeyModal" class="modal-overlay">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h3>🔑 Add New Key</h3>
+                    <button class="modal-close" onclick="closeAddKeyModal()">×</button>
+                </div>
+                <form id="addKeyForm" class="plan-edit-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="new-key-value">Key Value</label>
+                            <div class="key-input-group">
+                                <input type="text" id="new-key-value" name="key_value" placeholder="Enter 16-digit key or leave empty for auto-generation" maxlength="16" pattern="[A-Z0-9]{16}" title="16 characters: A-Z and 0-9 only">
+                                <button type="button" class="btn-secondary" onclick="generateRandomKey()">
+                                    <span class="btn-icon">🎲</span>
+                                    Generate
+                                </button>
+                            </div>
+                            <small class="form-help">Enter exactly 16 characters (A-Z and 0-9) or use Generate button</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-marked-as-used">Initial Status</label>
+                            <select id="new-marked-as-used" name="marked_as_used">
+                                <option value="false" selected>Available</option>
+                                <option value="true">Used</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeAddKeyModal()">
+                            <span class="btn-icon">❌</span>
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <span class="btn-icon">➕</span>
+                            Add Key
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    // Add modal to page
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Add form submit handler
+    document.getElementById('addKeyForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await createNewKey();
+    });
+    
+    // Show modal with animation
+    setTimeout(() => {
+        document.getElementById('addKeyModal').classList.add('show');
+    }, 10);
+}
+
+// Generate random key and fill input
+function generateRandomKey() {
+    const keyInput = document.getElementById('new-key-value');
+    if (keyInput) {
+        keyInput.value = generateAlphanumericKey(16);
+    }
+}
+
+// Create new key from form
+async function createNewKey() {
+    try {
+        const form = document.getElementById('addKeyForm');
+        const formData = new FormData(form);
+        
+        let keyValue = formData.get('key_value').trim();
+        
+        // If no key provided, generate one
+        if (!keyValue) {
+            keyValue = generateAlphanumericKey(16);
+        }
+        
+        // Validate key format
+        if (!/^[A-Z0-9]{16}$/.test(keyValue)) {
+            showNotification('Key must be exactly 16 characters (A-Z and 0-9 only)', 'error');
+            return;
+        }
+        
+        const keyData = {
+            key_value: keyValue,
+            marked_as_used: formData.get('marked_as_used') === 'true'
+        };
+        
+        console.log('🔑 Creating new key:', keyData);
+        
+        const { data, error } = await supabaseClient
+            .from('keys')
+            .insert([keyData])
+            .select()
+            .single();
+            
+        if (error) {
+            console.error('❌ Failed to create key:', error);
+            showNotification('Failed to create key: ' + error.message, 'error');
+            return;
+        }
+        
+        console.log('✅ Key created successfully:', data);
+        showNotification('New key created successfully!', 'success');
+        
+        // Close modal and refresh keys
+        closeAddKeyModal();
+        loadKeys();
+        
+    } catch (error) {
+        console.error('❌ Create new key failed:', error);
+        showNotification('Failed to create key: ' + error.message, 'error');
+    }
+}
+
+// Close add key modal
+function closeAddKeyModal() {
+    const modal = document.getElementById('addKeyModal');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.remove();
+        }, 300);
+    }
+}
+
+// Generate alphanumeric key
+function generateAlphanumericKey(length = 16) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+}
+
+// Mark key as used
+async function markKeyAsUsed(keyId) {
+    try {
+        console.log('🔑 Marking key as used:', keyId);
+        
+        const { error } = await supabaseClient
+            .from('keys')
+            .update({ marked_as_used: true })
+            .eq('key_id', keyId);
+            
+        if (error) {
+            console.error('❌ Failed to mark key as used:', error);
+            showNotification('Failed to mark key as used: ' + error.message, 'error');
+            return;
+        }
+        
+        console.log('✅ Key marked as used successfully');
+        showNotification('Key marked as used successfully!', 'success');
+        
+        // Refresh keys
+        loadKeys();
+        
+    } catch (error) {
+        console.error('❌ Mark key as used failed:', error);
+        showNotification('Failed to mark key as used: ' + error.message, 'error');
+    }
+}
+
+// Mark key as available
+async function markKeyAsAvailable(keyId) {
+    try {
+        console.log('🔑 Marking key as available:', keyId);
+        
+        const { error } = await supabaseClient
+            .from('keys')
+            .update({ marked_as_used: false })
+            .eq('key_id', keyId);
+            
+        if (error) {
+            console.error('❌ Failed to mark key as available:', error);
+            showNotification('Failed to mark key as available: ' + error.message, 'error');
+            return;
+        }
+        
+        console.log('✅ Key marked as available successfully');
+        showNotification('Key marked as available successfully!', 'success');
+        
+        // Refresh keys
+        loadKeys();
+        
+    } catch (error) {
+        console.error('❌ Mark key as available failed:', error);
+        showNotification('Failed to mark key as available: ' + error.message, 'error');
+    }
+}
+
+// Edit key
+async function editKey(keyId) {
+    try {
+        console.log('🔑 Editing key:', keyId);
+        
+        // Get the current key data
+        const { data: key, error } = await supabaseClient
+            .from('keys')
+            .select('*')
+            .eq('key_id', keyId)
+            .single();
+            
+        if (error) {
+            console.error('❌ Failed to get key data:', error);
+            showNotification('Failed to get key data: ' + error.message, 'error');
+            return;
+        }
+        
+        // Show edit modal
+        showEditKeyModal(key);
+        
+    } catch (error) {
+        console.error('❌ Edit key failed:', error);
+        showNotification('Failed to edit key: ' + error.message, 'error');
+    }
+}
+
+// Show edit key modal
+function showEditKeyModal(key) {
+    const modalHTML = `
+        <div id="editKeyModal" class="modal-overlay">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h3>✏️ Edit Key</h3>
+                    <button class="modal-close" onclick="closeEditKeyModal()">×</button>
+                </div>
+                <form id="editKeyForm" class="plan-edit-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-key-id">Key ID</label>
+                            <input type="text" id="edit-key-id" value="${key.key_id}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-key-value">Key Value</label>
+                            <input type="text" id="edit-key-value" name="key_value" value="${key.key_value}" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-marked-as-used">Status</label>
+                            <select id="edit-marked-as-used" name="marked_as_used">
+                                <option value="false" ${!key.marked_as_used ? 'selected' : ''}>Available</option>
+                                <option value="true" ${key.marked_as_used ? 'selected' : ''}>Used</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-created-at">Created At</label>
+                            <input type="text" id="edit-created-at" value="${new Date(key.created_at).toLocaleString()}" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeEditKeyModal()">
+                            <span class="btn-icon">❌</span>
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <span class="btn-icon">💾</span>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    // Add modal to page
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Add form submit handler
+    document.getElementById('editKeyForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await updateKey(key.key_id);
+    });
+    
+    // Show modal with animation
+    setTimeout(() => {
+        document.getElementById('editKeyModal').classList.add('show');
+    }, 10);
+}
+
+// Update key
+async function updateKey(keyId) {
+    try {
+        const form = document.getElementById('editKeyForm');
+        const formData = new FormData(form);
+        
+        const keyData = {
+            key_value: formData.get('key_value'),
+            marked_as_used: formData.get('marked_as_used') === 'true'
+        };
+        
+        console.log('🔑 Updating key:', keyId, keyData);
+        
+        const { error } = await supabaseClient
+            .from('keys')
+            .update(keyData)
+            .eq('key_id', keyId);
+            
+        if (error) {
+            console.error('❌ Failed to update key:', error);
+            showNotification('Failed to update key: ' + error.message, 'error');
+            return;
+        }
+        
+        console.log('✅ Key updated successfully');
+        showNotification('Key updated successfully!', 'success');
+        
+        // Close modal and refresh keys
+        closeEditKeyModal();
+        loadKeys();
+        
+    } catch (error) {
+        console.error('❌ Update key failed:', error);
+        showNotification('Failed to update key: ' + error.message, 'error');
+    }
+}
+
+// Close edit key modal
+function closeEditKeyModal() {
+    const modal = document.getElementById('editKeyModal');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.remove();
+        }, 300);
+    }
+}
+
+// Delete key
+async function deleteKey(keyId) {
+    if (!confirm('Are you sure you want to delete this key? This action cannot be undone.')) {
+        return;
+    }
+    
+    try {
+        console.log('🔑 Deleting key:', keyId);
+        
+        const { error } = await supabaseClient
+            .from('keys')
+            .delete()
+            .eq('key_id', keyId);
+            
+        if (error) {
+            console.error('❌ Failed to delete key:', error);
+            showNotification('Failed to delete key: ' + error.message, 'error');
+            return;
+        }
+        
+        console.log('✅ Key deleted successfully');
+        showNotification('Key deleted successfully!', 'success');
+        
+        // Refresh keys
+        loadKeys();
+        
+    } catch (error) {
+        console.error('❌ Delete key failed:', error);
+        showNotification('Failed to delete key: ' + error.message, 'error');
+    }
+}
+
+// Refresh keys
+function refreshKeys() {
+    loadKeys();
+}
+
+// Copy key to clipboard
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        showNotification('Key copied to clipboard!', 'success');
+    }).catch(() => {
+        showNotification('Failed to copy key', 'error');
+    });
+}
+
+// Setup keys event listeners
+function setupKeysEventListeners() {
+    // Search functionality
+    const searchInput = document.getElementById('key-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            filterKeys(searchTerm);
+        });
+    }
+    
+    // Filter functionality
+    const filterSelect = document.getElementById('key-filter');
+    if (filterSelect) {
+        filterSelect.addEventListener('change', (e) => {
+            const filterValue = e.target.value;
+            filterKeys('', filterValue);
+        });
+    }
+}
+
+// Filter keys
+function filterKeys(searchTerm = '', filterValue = 'all') {
+    const tbody = document.getElementById('keys-table-body');
+    const rows = tbody.querySelectorAll('tr');
+    
+    rows.forEach(row => {
+        if (row.querySelector('.no-data')) return;
+        
+        const keyValue = row.querySelector('.key-value code').textContent.toLowerCase();
+        const status = row.querySelector('.status-badge').textContent.toLowerCase();
+        
+        let showRow = true;
+        
+        // Search filter
+        if (searchTerm && !keyValue.includes(searchTerm)) {
+            showRow = false;
+        }
+        
+        // Status filter
+        if (filterValue !== 'all') {
+            if (filterValue === 'available' && status !== 'available') {
+                showRow = false;
+            } else if (filterValue === 'used' && status !== 'used') {
+                showRow = false;
+            }
+        }
+        
+        row.style.display = showRow ? '' : 'none';
+    });
 }

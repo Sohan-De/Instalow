@@ -413,6 +413,16 @@ body.lab-theme {
     overflow: hidden !important;
 }
 
+/* Make the entire pricing card non-clickable */
+.pricing-card {
+    pointer-events: none !important;
+}
+
+/* But allow the button to be clickable */
+.pricing-card .pricing-btn {
+    pointer-events: auto !important;
+}
+
 /* Force button positioning with !important */
 .pricing-cards .pricing-card .pricing-btn,
 .pricing-card .pricing-btn {
