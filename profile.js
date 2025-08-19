@@ -159,6 +159,9 @@ async function loadProfile() {
         
         // Check for recent purchases and update plan type if needed
         await checkRecentPurchases();
+        
+        // Load user's current key
+        await loadUserKey();
 
     } catch (error) {
         console.error('Load profile error:', error);
@@ -384,3 +387,91 @@ window.addEventListener('auth-state-changed', checkAdminStatus);
 
 // Check admin status when page loads
 document.addEventListener('DOMContentLoaded', checkAdminStatus);
+
+// Load and display user's current key
+async function loadUserKey() {
+    try {
+        if (!supabaseClient || !currentUser) return;
+
+        console.log('🔑 Loading user key...');
+
+        // Get user's active key assignment
+        const { data: keyAssignment, error } = await supabaseClient
+            .from('user_key_assignments')
+            .select(`
+                id,
+                plan_id,
+                assigned_at,
+                status,
+                keys!inner(key_value, plan_id),
+                subscription_plans!inner(name, plan_type)
+            `)
+            .eq('user_id', currentUser.id)
+            .eq('status', 'active')
+            .order('assigned_at', { ascending: false })
+            .limit(1)
+            .single();
+
+        if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
+            console.error('Error loading user key:', error);
+            return;
+        }
+
+        if (keyAssignment) {
+            console.log('✅ User key loaded:', keyAssignment);
+            displayUserKey(keyAssignment);
+        } else {
+            console.log('ℹ️ No active key found for user');
+            hideUserKey();
+        }
+
+    } catch (error) {
+        console.error('❌ Failed to load user key:', error);
+    }
+}
+
+// Display user's key in the profile
+function displayUserKey(keyAssignment) {
+    const keySection = document.getElementById('user-key-section');
+    if (!keySection) return;
+
+    const keyValue = keyAssignment.keys.key_value;
+    const planName = keyAssignment.subscription_plans.name;
+    const planType = keyAssignment.subscription_plans.plan_type;
+    const assignedDate = new Date(keyAssignment.assigned_at).toLocaleDateString();
+
+    keySection.innerHTML = `
+        <div class="key-info">
+            <h3>🔑 Your Activation Key</h3>
+            <div class="key-display">
+                <code class="key-value">${keyValue}</code>
+                <button class="copy-key-btn" onclick="copyKeyToClipboard('${keyValue}')" title="Copy key">
+                    📋
+                </button>
+            </div>
+            <div class="key-details">
+                <p><strong>Plan:</strong> ${planName} (${planType})</p>
+                <p><strong>Assigned:</strong> ${assignedDate}</p>
+                <p><strong>Status:</strong> <span class="status-active">Active</span></p>
+            </div>
+        </div>
+    `;
+    keySection.style.display = 'block';
+}
+
+// Hide user key section
+function hideUserKey() {
+    const keySection = document.getElementById('user-key-section');
+    if (keySection) {
+        keySection.style.display = 'none';
+    }
+}
+
+// Copy key to clipboard
+function copyKeyToClipboard(keyValue) {
+    navigator.clipboard.writeText(keyValue).then(() => {
+        showNotification('Key copied to clipboard!', 'success');
+    }).catch(() => {
+        showNotification('Failed to copy key', 'error');
+    });
+}

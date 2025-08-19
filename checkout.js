@@ -443,6 +443,20 @@ async function handleFormSubmission(event) {
             // Update user profile with purchased plan
             await updateUserProfileWithPlan(window.selectedPlan);
             
+            // Automatically assign a key to the user
+            try {
+                console.log('🔑 Assigning key to user...');
+                const keyAssignmentResult = await assignKeyToUser(formData.email, window.selectedPlan.name);
+                
+                if (keyAssignmentResult.success) {
+                    console.log('✅ Key assigned successfully:', keyAssignmentResult.keyValue);
+                } else {
+                    console.warn('⚠️ Key assignment failed:', keyAssignmentResult.message);
+                }
+            } catch (keyError) {
+                console.error('❌ Key assignment error:', keyError);
+            }
+            
             // Send payment success email with key
             try {
                 console.log('📧 Sending payment success email...');
@@ -578,14 +592,19 @@ async function updateUserProfileWithPlan(planData) {
         const userId = session.user.id;
         console.log('Updating profile for user:', userId, 'with plan:', planData.name);
 
-        // Map plan names to better display names
+        // Map plan names to plan IDs and types
         let planType = 'free';
+        let planId = 1;
+        
         if (planData.name.includes('Professional')) {
             planType = 'professional';
+            planId = 2;
         } else if (planData.name.includes('Enterprise')) {
             planType = 'enterprise';
+            planId = 3;
         } else if (planData.name.includes('Trial')) {
             planType = 'trial';
+            planId = 1;
         }
 
         // Update the user's profile in Supabase
@@ -595,6 +614,7 @@ async function updateUserProfileWithPlan(planData) {
                 id: userId,
                 email: session.user.email,
                 plan_type: planType,
+                plan_id: planId,
                 plan_status: 'active',
                 updated_at: new Date().toISOString()
             }, {
@@ -611,6 +631,120 @@ async function updateUserProfileWithPlan(planData) {
 
     } catch (error) {
         console.error('Error updating user profile with plan:', error);
+    }
+}
+
+// Assign a key to the user based on their purchased plan
+async function assignKeyToUser(userEmail, planName) {
+    try {
+        if (!window.supabaseClient) {
+            throw new Error('Supabase client not available');
+        }
+
+        console.log('🔑 Assigning key to user:', userEmail, 'for plan:', planName);
+
+        // Get current user session
+        const { data: { session }, error: sessionError } = await window.supabaseClient.auth.getSession();
+        if (sessionError || !session) {
+            throw new Error('No active session');
+        }
+
+        const userId = session.user.id;
+
+        // Check if user already has an active key for this plan
+        const { data: existingAssignment, error: checkError } = await window.supabaseClient
+            .from('user_key_assignments')
+            .select('id, key_id, status')
+            .eq('user_id', userId)
+            .eq('plan_id', planId)
+            .eq('status', 'active')
+            .single();
+
+        if (existingAssignment && !checkError) {
+            console.log('ℹ️ User already has an active key for this plan:', existingAssignment.key_id);
+            return {
+                success: true,
+                keyId: existingAssignment.key_id,
+                message: 'User already has an active key for this plan',
+                alreadyAssigned: true
+            };
+        }
+
+        // Map plan names to plan IDs
+        let planId;
+        switch (planName.toLowerCase()) {
+            case 'professional':
+                planId = 2;
+                break;
+            case 'enterprise':
+                planId = 3;
+                break;
+            case 'free':
+            case 'trial':
+            default:
+                planId = 1;
+                break;
+        }
+
+        // Find an available key for the specific plan
+        const { data: availableKey, error: keyError } = await window.supabaseClient
+            .from('keys')
+            .select('key_id, key_value')
+            .eq('plan_id', planId)
+            .eq('marked_as_used', false)
+            .limit(1)
+            .single();
+
+        if (keyError || !availableKey) {
+            throw new Error(`No available keys found for ${planName} plan`);
+        }
+
+        // Mark the key as used
+        const { error: updateError } = await window.supabaseClient
+            .from('keys')
+            .update({ 
+                marked_as_used: true,
+                user_id: userId,
+                used_at: new Date().toISOString()
+            })
+            .eq('key_id', availableKey.key_id);
+
+        if (updateError) {
+            throw new Error('Failed to assign key to user');
+        }
+
+        // Create a user_key_assignment record
+        const { error: assignmentError } = await window.supabaseClient
+            .from('user_key_assignments')
+            .insert({
+                user_id: userId,
+                key_id: availableKey.key_id,
+                plan_id: planId,
+                assigned_at: new Date().toISOString(),
+                status: 'active'
+            });
+
+        if (assignmentError) {
+            console.warn('⚠️ Failed to create key assignment record:', assignmentError);
+            // Don't fail the whole process if this fails
+        }
+
+        console.log('✅ Key assigned successfully to user:', availableKey.key_value);
+
+        return {
+            success: true,
+            keyId: availableKey.key_id,
+            keyValue: availableKey.key_value,
+            planId: planId,
+            message: 'Key assigned successfully'
+        };
+
+    } catch (error) {
+        console.error('❌ Failed to assign key to user:', error);
+        return {
+            success: false,
+            message: error.message
+        };
     }
 }
 

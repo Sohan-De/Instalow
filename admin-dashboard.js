@@ -3390,7 +3390,10 @@ async function loadKeys() {
         
         const { data: keys, error } = await supabaseClient
             .from('keys')
-            .select('*')
+            .select(`
+                *,
+                subscription_plans!inner(name, plan_type)
+            `)
             .order('key_id', { ascending: true });
             
         if (error) {
@@ -3416,61 +3419,69 @@ function displayKeys(keys) {
     
     tbody.innerHTML = '';
     
-    if (!keys || keys.length === 0) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="5" class="no-data">
-                    <div class="no-data-content">
-                        <span class="no-data-icon">🔑</span>
-                        <p>No keys found</p>
-                        <button class="action-btn primary" onclick="addNewKey()">
-                            <span class="btn-icon">➕</span>
-                            Add First Key
+            if (!keys || keys.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="no-data">
+                        <div class="no-data-content">
+                            <span class="no-data-icon">🔑</span>
+                            <p>No keys found</p>
+                            <button class="action-btn primary" onclick="addNewKey()">
+                                <span class="btn-icon">➕</span>
+                                Add First Key
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+    
+            keys.forEach(key => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <div class="key-id">${key.key_id}</div>
+                </td>
+                <td>
+                    <div class="key-value">
+                        <code>${key.key_value}</code>
+                        <button class="copy-btn" onclick="copyToClipboard('${key.key_value}')" title="Copy key">
+                            <span class="btn-icon">📋</span>
                         </button>
                     </div>
                 </td>
-            </tr>
-        `;
-        return;
-    }
-    
-    keys.forEach(key => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>
-                <div class="key-id">${key.key_id}</div>
-            </td>
-            <td>
-                <div class="key-value">
-                    <code>${key.key_value}</code>
-                    <button class="copy-btn" onclick="copyToClipboard('${key.key_value}')" title="Copy key">
-                        <span class="btn-icon">📋</span>
-                    </button>
-                </div>
-            </td>
-            <td>
-                <span class="status-badge ${key.marked_as_used ? 'used' : 'available'}">
-                    ${key.marked_as_used ? 'Used' : 'Available'}
-                </span>
-            </td>
-            <td>
-                <div class="date-info">
-                    ${new Date(key.created_at).toLocaleDateString()}
-                </div>
-            </td>
-            <td>
-                <div class="action-buttons">
-                    <button class="action-btn small secondary" onclick="editKey(${key.key_id})" title="Edit key">
-                        <span class="btn-icon">✏️</span>
-                    </button>
-                    <button class="action-btn small danger" onclick="deleteKey(${key.key_id})" title="Delete key">
-                        <span class="btn-icon">🗑️</span>
-                    </button>
-                </div>
-            </td>
-        `;
-        tbody.appendChild(row);
-    });
+                <td>
+                    <div class="plan-info">
+                        <span class="plan-badge plan-${key.plan_id}">
+                            ${key.subscription_plans?.name || 'Unknown Plan'}
+                        </span>
+                        <small class="plan-type">${key.subscription_plans?.plan_type || 'N/A'}</small>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-badge ${key.marked_as_used ? 'used' : 'available'}">
+                        ${key.marked_as_used ? 'Used' : 'Available'}
+                    </span>
+                </td>
+                <td>
+                    <div class="date-info">
+                        ${new Date(key.created_at).toLocaleDateString()}
+                    </div>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-btn small secondary" onclick="editKey(${key.key_id})" title="Edit key">
+                            <span class="btn-icon">✏️</span>
+                        </button>
+                        <button class="action-btn small danger" onclick="deleteKey(${key.key_id})" title="Delete key">
+                            <span class="btn-icon">🗑️</span>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
 }
 
 // Update keys summary
@@ -3526,6 +3537,19 @@ function showAddKeyModal() {
                                 <option value="false" selected>Available</option>
                                 <option value="true">Used</option>
                             </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="new-plan-id">Subscription Plan</label>
+                            <select id="new-plan-id" name="plan_id" required>
+                                <option value="">Select a plan</option>
+                                <option value="1">1 - Free Plan</option>
+                                <option value="2">2 - Pro Plan</option>
+                                <option value="3">3 - Business Plan</option>
+                            </select>
+                            <small class="form-help">Choose which subscription plan this key will activate</small>
                         </div>
                     </div>
                     
@@ -3586,9 +3610,17 @@ async function createNewKey() {
             return;
         }
         
+        // Validate plan_id is selected
+        const planId = formData.get('plan_id');
+        if (!planId) {
+            showNotification('Please select a subscription plan', 'error');
+            return;
+        }
+        
         const keyData = {
             key_value: keyValue,
-            marked_as_used: formData.get('marked_as_used') === 'true'
+            marked_as_used: formData.get('marked_as_used') === 'true',
+            plan_id: parseInt(formData.get('plan_id'))
         };
         
         console.log('🔑 Creating new key:', keyData);
@@ -3887,22 +3919,35 @@ function setupKeysEventListeners() {
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            filterKeys(searchTerm);
+            const currentStatusFilter = document.getElementById('key-filter')?.value || 'all';
+            const currentPlanFilter = document.getElementById('plan-filter')?.value || 'all';
+            filterKeys(searchTerm, currentStatusFilter, currentPlanFilter);
         });
     }
     
-    // Filter functionality
+    // Status filter functionality
     const filterSelect = document.getElementById('key-filter');
     if (filterSelect) {
         filterSelect.addEventListener('change', (e) => {
             const filterValue = e.target.value;
-            filterKeys('', filterValue);
+            const currentSearchTerm = document.getElementById('key-search')?.value.toLowerCase() || '';
+            const currentPlanFilter = document.getElementById('plan-filter')?.value || 'all';
+            filterKeys(currentSearchTerm, filterValue, currentPlanFilter);
+        });
+    }
+    
+    // Plan filter functionality
+    const planFilterSelect = document.getElementById('plan-filter');
+    if (planFilterSelect) {
+        planFilterSelect.addEventListener('change', (e) => {
+            const planFilterValue = e.target.value;
+            filterKeys('', 'all', planFilterValue);
         });
     }
 }
 
 // Filter keys
-function filterKeys(searchTerm = '', filterValue = 'all') {
+function filterKeys(searchTerm = '', filterValue = 'all', planFilterValue = 'all') {
     const tbody = document.getElementById('keys-table-body');
     const rows = tbody.querySelectorAll('tr');
     
@@ -3911,6 +3956,8 @@ function filterKeys(searchTerm = '', filterValue = 'all') {
         
         const keyValue = row.querySelector('.key-value code').textContent.toLowerCase();
         const status = row.querySelector('.status-badge').textContent.toLowerCase();
+        const planBadge = row.querySelector('.plan-badge');
+        const planId = planBadge ? planBadge.className.match(/plan-(\d+)/)?.[1] : null;
         
         let showRow = true;
         
@@ -3926,6 +3973,11 @@ function filterKeys(searchTerm = '', filterValue = 'all') {
             } else if (filterValue === 'used' && status !== 'used') {
                 showRow = false;
             }
+        }
+        
+        // Plan filter
+        if (planFilterValue !== 'all' && planId !== planFilterValue) {
+            showRow = false;
         }
         
         row.style.display = showRow ? '' : 'none';

@@ -87,28 +87,55 @@ async function sendPaymentSuccessEmail(userEmail, userName, planName, amount, ke
 }
 
 // Get available key from Supabase and mark as used
-async function getAndMarkKeyAsUsed() {
+async function getAndMarkKeyAsUsed(planType = null) {
     try {
         if (!window.supabaseClient) {
             throw new Error('Supabase client not available');
         }
 
-        console.log('🔑 Getting available key from database...');
+        console.log('🔑 Getting available key from database for plan:', planType);
 
-        // Get first available key
-        const { data: keys, error: fetchError } = await window.supabaseClient
+        // Build query based on plan type
+        let query = window.supabaseClient
             .from('keys')
-            .select('key_id, key_value')
-            .eq('marked_as_used', false)
+            .select('key_id, key_value, plan_id')
+            .eq('marked_as_used', false);
+
+        // If plan type is specified, filter by plan
+        if (planType) {
+            let planId;
+            switch (planType.toLowerCase()) {
+                case 'free':
+                case 'trial':
+                    planId = 1;
+                    break;
+                case 'professional':
+                case 'pro':
+                    planId = 2;
+                    break;
+                case 'enterprise':
+                case 'business':
+                    planId = 3;
+                    break;
+                default:
+                    planId = 1; // Default to free plan
+            }
+            
+            query = query.eq('plan_id', planId);
+            console.log('🔍 Filtering for plan ID:', planId);
+        }
+
+        // Get first available key for the specified plan
+        const { data: keys, error: fetchError } = await query
             .limit(1)
             .single();
 
         if (fetchError) {
-            throw new Error('No available keys found');
+            throw new Error(`No available keys found for ${planType || 'any'} plan`);
         }
 
         if (!keys) {
-            throw new Error('No available keys in database');
+            throw new Error(`No available keys in database for ${planType || 'any'} plan`);
         }
 
         console.log('✅ Found available key:', keys);
@@ -128,7 +155,8 @@ async function getAndMarkKeyAsUsed() {
         return {
             success: true,
             keyId: keys.key_id,
-            keyValue: keys.key_value
+            keyValue: keys.key_value,
+            planId: keys.plan_id
         };
 
     } catch (error) {
@@ -145,8 +173,8 @@ async function completePaymentWithKey(userEmail, userName, planName, amount) {
     try {
         console.log('💳 Completing payment process...');
 
-        // Step 1: Get available key and mark as used
-        const keyResult = await getAndMarkKeyAsUsed();
+        // Step 1: Get available key and mark as used for the specific plan
+        const keyResult = await getAndMarkKeyAsUsed(planName);
         
         if (!keyResult.success) {
             throw new Error('Failed to get key: ' + keyResult.message);

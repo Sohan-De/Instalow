@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Instalow</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>
@@ -661,6 +661,11 @@
                 <button class="btn btn-primary" onclick="enableEditMode()">✏️ Edit Profile</button>
                 <button class="btn btn-secondary" onclick="goToHome()">🏠 Back to Home</button>
             </div>
+        </div>
+        
+        <!-- User Key Section -->
+        <div class="user-key-section" id="user-key-section" style="display: none;">
+            <!-- Key information will be loaded here by JavaScript -->
         </div>
 
         <form class="profile-form edit-mode" id="editMode">
