@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Instalow</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="lab-theme.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>
     <style>
@@ -42,7 +44,7 @@
             position: relative;
             z-index: 2;
             max-width: 900px;
-            margin: 30px auto;
+            margin: 130px auto 30px auto;
             padding: 40px;
             background: rgba(7, 27, 15, 0.95);
             backdrop-filter: blur(20px);
@@ -510,34 +512,7 @@
             display: none;
         }
 
-        .notification {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            padding: 20px 25px;
-            border-radius: 15px;
-            color: white;
-            font-weight: 600;
-            z-index: 1000;
-            transform: translateX(100%);
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
 
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.success {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            border: 1px solid rgba(72, 187, 120, 0.3);
-        }
-
-        .notification.error {
-            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
-            border: 1px solid rgba(245, 101, 101, 0.3);
-        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -612,7 +587,132 @@
         }
     </style>
 </head>
-<body>
+<body class="lab-theme">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link" onclick="scrollToTop(); return false;">
+                    <h2 class="logo-text">Instaflow</h2>
+                </a>
+            </div>
+            
+            <!-- Hamburger Menu Button -->
+            <button class="hamburger-menu" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Mobile Menu Overlay -->
+            <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+                <div class="mobile-menu-content">
+                    <div class="mobile-menu-header">
+                        <h3 class="mobile-menu-title">Menu</h3>
+                        <button class="mobile-menu-close" onclick="toggleMobileMenu()" aria-label="Close menu">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mobile-nav-links">
+                        <a href="features-new.html" class="mobile-nav-link" onclick="closeMobileMenu()">Features</a>
+                        <a href="download.html" class="mobile-nav-link" onclick="closeMobileMenu()">Download</a>
+                        <a href="guide.html" class="mobile-nav-link" onclick="closeMobileMenu()">Guide</a>
+                        <a href="partners.html" class="mobile-nav-link" onclick="closeMobileMenu()">Partners</a>
+                        <a href="contact.html" class="mobile-nav-link" onclick="closeMobileMenu()">Contact</a>
+                        <a href="pricing.html" class="mobile-nav-link mobile-pricing-link" onclick="closeMobileMenu()">Get Pro</a>
+                    </div>
+                    
+                    <div class="mobile-auth-section">
+                        <!-- Guest State (when not logged in) -->
+                        <div class="mobile-auth-buttons guest-state">
+                            <a href="auth.html" class="mobile-auth-btn signin-btn" onclick="closeMobileMenu()">Sign In</a>
+                            <a href="auth.html?form=signup" class="mobile-auth-btn signup-btn" onclick="closeMobileMenu()">Sign Up</a>
+                        </div>
+                        
+                        <!-- Logged In State (when user is authenticated) -->
+                        <div class="mobile-auth-buttons logged-in-state" style="display: none;">
+                            <div class="mobile-profile-menu">
+                                <button class="mobile-profile-btn" onclick="toggleMobileProfileMenu()">
+                                    <span class="profile-avatar"><i class="fas fa-user"></i></span>
+                                    <span class="profile-name">User</span>
+                                    <span class="profile-arrow"><i class="fas fa-chevron-down"></i></span>
+                                </button>
+                                <div class="mobile-profile-dropdown" id="mobile-profile-dropdown">
+                                    <a href="profile.html" class="mobile-dropdown-item" onclick="closeMobileMenu()">
+                                        <span class="item-icon"><i class="fas fa-user"></i></span>
+                                        Profile
+                                    </a>
+                                    <a href="admin-dashboard.html" class="mobile-dropdown-item admin-only" onclick="closeMobileMenu()">
+                                        <span class="item-icon"><i class="fas fa-chart-line"></i></span>
+                                        Dashboard
+                                    </a>
+                                    <a href="#" class="mobile-dropdown-item" onclick="closeMobileMenu()">
+                                        <span class="item-icon"><i class="fas fa-credit-card"></i></span>
+                                        Billing
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="mobile-dropdown-item logout-btn" onclick="handleLogout(); closeMobileMenu();">
+                                        <span class="item-icon"><i class="fas fa-sign-out-alt"></i></span>
+                                        Sign Out
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-links desktop-nav">
+                <a href="features-new.html" class="nav-link">Features</a>
+                <a href="download.html" class="nav-link">Download</a>
+                <a href="guide.html" class="nav-link">Guide</a>
+                <a href="partners.html" class="nav-link">Partners</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
+            </div>
+            
+            <div class="nav-auth desktop-nav">
+                <!-- Guest State (when not logged in) -->
+                <div class="auth-buttons guest-state">
+                    <a href="auth.html" class="auth-btn signin-btn">Sign In</a>
+                    <a href="auth.html?form=signup" class="auth-btn signup-btn">Sign Up</a>
+                </div>
+                
+                <!-- Logged In State (when user is authenticated) -->
+                <div class="auth-buttons logged-in-state" style="display: none;">
+                    <div class="profile-menu">
+                        <button class="profile-btn" onclick="toggleProfileMenu()">
+                            <span class="profile-avatar"><i class="fas fa-user"></i></span>
+                            <span class="profile-name">User</span>
+                            <span class="profile-arrow"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="profile-dropdown" id="profile-dropdown">
+                            <a href="profile.html" class="dropdown-item">
+                                <span class="item-icon"><i class="fas fa-user"></i></span>
+                                Profile
+                            </a>
+                            <a href="admin-dashboard.html" class="dropdown-item admin-only">
+                                <span class="item-icon"><i class="fas fa-chart-line"></i></span>
+                                Dashboard
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <span class="item-icon"><i class="fas fa-credit-card"></i></span>
+                                Billing
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item logout-btn" onclick="handleLogout()">
+                                <span class="item-icon"><i class="fas fa-sign-out-alt"></i></span>
+                                Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <!-- Floating decorative elements -->
     <div class="floating-element">🌟</div>
     <div class="floating-element">💫</div>
@@ -720,8 +820,191 @@
         </form>
     </div>
 
-    <div id="notification" class="notification"></div>
+
 
     <script src="profile.js"></script>
+    
+    <script>
+        // Logo click handler for navigation
+        function handleLogoClick() {
+            console.log('Logo clicked, navigating to home page');
+            window.location.href = 'index.html';
+        }
+        
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu-overlay');
+            const hamburger = document.querySelector('.hamburger-menu');
+            const body = document.body;
+            
+            if (mobileMenu.classList.contains('active')) {
+                // Close menu
+                mobileMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                body.classList.remove('mobile-menu-open');
+                body.style.overflow = 'auto';
+                body.style.position = 'static';
+                body.style.height = 'auto';
+            } else {
+                // Open menu
+                mobileMenu.classList.add('active');
+                hamburger.classList.add('active');
+                body.classList.add('mobile-menu-open');
+                body.style.overflow = 'hidden';
+                body.style.position = 'fixed';
+                body.style.width = '100%';
+                body.style.top = `-${window.scrollY}px`;
+            }
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu-overlay');
+            const hamburger = document.querySelector('.hamburger-menu');
+            const body = document.body;
+            
+            if (mobileMenu) {
+                mobileMenu.classList.remove('active');
+            }
+            if (hamburger) {
+                hamburger.classList.remove('active');
+            }
+            
+            // Restore scroll position
+            const scrollY = body.style.top;
+            body.classList.remove('mobile-menu-open');
+            body.style.position = 'static';
+            body.style.height = 'auto';
+            body.style.overflow = 'auto';
+            body.style.top = '';
+            
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            }
+        }
+        
+        function toggleMobileProfileMenu() {
+            const mobileProfileDropdown = document.getElementById('mobile-profile-dropdown');
+            const profileBtn = document.querySelector('.mobile-profile-btn');
+            
+            mobileProfileDropdown.classList.toggle('show');
+            profileBtn.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const mobileMenu = document.getElementById('mobile-menu-overlay');
+            const hamburger = document.querySelector('.hamburger-menu');
+            
+            if (mobileMenu && mobileMenu.classList.contains('active') && 
+                !mobileMenu.contains(e.target) && 
+                !hamburger.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close mobile menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
+        
+        // Authentication State Management
+        function switchToLoggedInState(email) {
+            // Hide guest state, show logged in state
+            document.querySelectorAll('.guest-state').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.logged-in-state').forEach(el => el.style.display = 'flex');
+            
+            // Update profile name with email
+            const profileNames = document.querySelectorAll('.profile-name');
+            profileNames.forEach(profileName => {
+                if (profileName) {
+                    profileName.textContent = email.split('@')[0]; // Show username part of email
+                }
+            });
+            
+            // Check if user is admin and show/hide dashboard link
+            const adminDashboardLinks = document.querySelectorAll('.admin-only');
+            adminDashboardLinks.forEach(adminDashboardLink => {
+                if (adminDashboardLink) {
+                    const isAdmin = email === 'admin@instaflow.com' || 
+                                   email === 'sohan@instaflow.com' ||
+                                   email === 'sohan@gmail.com' ||      
+                                   email === 'sohan.khan@gmail.com';   
+                    
+                    if (isAdmin) {
+                        adminDashboardLink.style.display = 'block';
+                    } else {
+                        adminDashboardLink.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        function switchToGuestState() {
+            // Show guest state, hide logged in state
+            document.querySelectorAll('.guest-state').forEach(el => el.style.display = 'flex');
+            document.querySelectorAll('.logged-in-state').forEach(el => el.style.display = 'none');
+        }
+
+        function checkAuthState() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (isLoggedIn && userEmail) {
+                switchToLoggedInState(userEmail);
+            } else {
+                switchToGuestState();
+            }
+        }
+
+        // Profile Menu Functions
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profile-dropdown');
+            const profileBtn = document.querySelector('.profile-btn');
+            
+            dropdown.classList.toggle('show');
+            profileBtn.classList.toggle('active');
+        }
+
+        function handleLogout() {
+            // Show loading state
+            const profileBtn = document.querySelector('.profile-btn');
+            const originalText = profileBtn.innerHTML;
+            profileBtn.innerHTML = '<span class="profile-avatar">⏳</span> <span class="profile-name">Signing Out...</span>';
+            
+            // Simulate logout process
+            setTimeout(() => {
+                // Switch to guest state
+                switchToGuestState();
+                
+                // Reset profile button
+                profileBtn.innerHTML = originalText;
+                
+                // Close dropdown
+                document.getElementById('profile-dropdown').classList.remove('show');
+                profileBtn.classList.remove('active');
+                
+                // Show success message
+                alert('Signed out successfully!');
+            }, 1000);
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const profileMenu = document.querySelector('.profile-menu');
+            const dropdown = document.getElementById('profile-dropdown');
+            
+            if (profileMenu && dropdown && !profileMenu.contains(e.target)) {
+                dropdown.classList.remove('show');
+                document.querySelector('.profile-btn').classList.remove('active');
+            }
+        });
+
+        // Initialize authentication state on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthState();
+        });
+    </script>
 </body>
 </html>

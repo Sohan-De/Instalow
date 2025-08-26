@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="lab-theme.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>
@@ -39,22 +40,22 @@
                 <div class="dot"></div>
             </div>
             <div class="background-stars">
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
-                <div class="star-bg">★</div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
+                <div class="star-bg"><i class="fas fa-star"></i></div>
             </div>
         </div>
         <div class="loader-container">
@@ -72,16 +73,84 @@
                         <h2 class="logo-text">Instaflow</h2>
                     </a>
                 </div>
-                            <div class="nav-links">
-                <a href="features-new.html" class="nav-link">Features</a>
-                <a href="download.html" class="nav-link">Download</a>
-                <a href="guide.html" class="nav-link">Guide</a>
                 
-                <a href="partners.html" class="nav-link">Partners</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-                <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
-            </div>
-                <div class="nav-auth">
+                <!-- Hamburger Menu Button -->
+                <button class="hamburger-menu" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                
+                <!-- Mobile Menu Overlay -->
+                <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+                    <div class="mobile-menu-content">
+                        <div class="mobile-menu-header">
+                            <h3 class="mobile-menu-title">Menu</h3>
+                            <button class="mobile-menu-close" onclick="toggleMobileMenu()" aria-label="Close menu">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="mobile-nav-links">
+                            <a href="features-new.html" class="mobile-nav-link" onclick="closeMobileMenu()">Features</a>
+                            <a href="download.html" class="mobile-nav-link" onclick="closeMobileMenu()">Download</a>
+                            <a href="guide.html" class="mobile-nav-link" onclick="closeMobileMenu()">Guide</a>
+                            <a href="partners.html" class="mobile-nav-link" onclick="closeMobileMenu()">Partners</a>
+                            <a href="contact.html" class="mobile-nav-link" onclick="closeMobileMenu()">Contact</a>
+                            <a href="pricing.html" class="mobile-nav-link mobile-pricing-link" onclick="closeMobileMenu()">Get Pro</a>
+                        </div>
+                        
+                        <div class="mobile-auth-section">
+                            <!-- Guest State (when not logged in) -->
+                            <div class="mobile-auth-buttons guest-state">
+                                <a href="auth.html" class="mobile-auth-btn signin-btn" onclick="closeMobileMenu()">Sign In</a>
+                                <a href="auth.html?form=signup" class="mobile-auth-btn signup-btn" onclick="closeMobileMenu()">Sign Up</a>
+                            </div>
+                            
+                            <!-- Logged In State (when user is authenticated) -->
+                            <div class="mobile-auth-buttons logged-in-state" style="display: none;">
+                                <div class="mobile-profile-menu">
+                                    <button class="mobile-profile-btn" onclick="toggleMobileProfileMenu()">
+                                        <span class="profile-avatar"><i class="fas fa-user"></i></span>
+                                        <span class="profile-name">User</span>
+                                        <span class="profile-arrow"><i class="fas fa-chevron-down"></i></span>
+                                    </button>
+                                    <div class="mobile-profile-dropdown" id="mobile-profile-dropdown">
+                                        <a href="profile.html" class="mobile-dropdown-item" onclick="closeMobileMenu()">
+                                            <span class="item-icon"><i class="fas fa-user"></i></span>
+                                            Profile
+                                        </a>
+                                        <a href="admin-dashboard.html" class="mobile-dropdown-item admin-only" style="display: none;" onclick="closeMobileMenu()">
+                                            <span class="item-icon"><i class="fas fa-chart-line"></i></span>
+                                            Dashboard
+                                        </a>
+                                        <a href="#" class="mobile-dropdown-item" onclick="closeMobileMenu()">
+                                            <span class="item-icon"><i class="fas fa-credit-card"></i></span>
+                                            Billing
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="mobile-dropdown-item logout-btn" onclick="handleLogout(); closeMobileMenu();">
+                                            <span class="item-icon"><i class="fas fa-sign-out-alt"></i></span>
+                                            Sign Out
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="nav-links desktop-nav">
+                    <a href="features-new.html" class="nav-link">Features</a>
+                    <a href="download.html" class="nav-link">Download</a>
+                    <a href="guide.html" class="nav-link">Guide</a>
+                    <a href="partners.html" class="nav-link">Partners</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
+                </div>
+                
+                <div class="nav-auth desktop-nav">
                     <!-- Guest State (when not logged in) -->
                     <div class="auth-buttons guest-state">
                         <a href="auth.html" class="auth-btn signin-btn">Sign In</a>
@@ -92,26 +161,26 @@
                     <div class="auth-buttons logged-in-state" style="display: none;">
                         <div class="profile-menu">
                             <button class="profile-btn" onclick="toggleProfileMenu()">
-                                <span class="profile-avatar">👤</span>
+                                <span class="profile-avatar"><i class="fas fa-user"></i></span>
                                 <span class="profile-name">User</span>
-                                <span class="profile-arrow">▼</span>
+                                <span class="profile-arrow"><i class="fas fa-chevron-down"></i></span>
                             </button>
                             <div class="profile-dropdown" id="profile-dropdown">
-                                                            <a href="profile.html" class="dropdown-item">
-                                <span class="item-icon">👤</span>
-                                Profile
-                            </a>
-                            <a href="admin-dashboard.html" class="dropdown-item admin-only" style="display: none;">
-                                <span class="item-icon">📊</span>
-                                Dashboard
-                            </a>
+                                <a href="profile.html" class="dropdown-item">
+                                    <span class="item-icon"><i class="fas fa-user"></i></span>
+                                    Profile
+                                </a>
+                                <a href="admin-dashboard.html" class="dropdown-item admin-only" style="display: none;">
+                                    <span class="item-icon"><i class="fas fa-chart-line"></i></span>
+                                    Dashboard
+                                </a>
                                 <a href="#" class="dropdown-item">
-                                    <span class="item-icon">💳</span>
+                                    <span class="item-icon"><i class="fas fa-credit-card"></i></span>
                                     Billing
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item logout-btn" onclick="handleLogout()">
-                                    <span class="item-icon">🚪</span>
+                                    <span class="item-icon"><i class="fas fa-sign-out-alt"></i></span>
                                     Sign Out
                                 </a>
                             </div>
@@ -139,11 +208,11 @@
                     <div class="hero-buttons">
                         <div class="hero-buttons-row">
                             <a href="checkout.html?plan=professional" class="hero-btn primary" id="hero-cta-btn">
-                                <span class="btn-icon">▶</span>
+                                <span class="btn-icon"><i class="fas fa-play"></i></span>
                                 <span class="btn-text">GET GLASS GRAM</span>
                             </a>
                             <button class="hero-btn secondary">
-                                <span class="btn-icon">🖥️</span>
+                                <span class="btn-icon"><i class="fas fa-desktop"></i></span>
                                 <span class="btn-text">View Demo</span>
                             </button>
                         </div>
@@ -172,7 +241,7 @@
                         <div class="feature-visual">
                             <div class="feature-circle">
                                 <div class="feature-icon-wrapper">
-                                    <span class="feature-icon">⚡</span>
+                                    <span class="feature-icon"><i class="fas fa-bolt"></i></span>
                                     <div class="icon-glow"></div>
                                 </div>
                                 <div class="feature-pulse-ring"></div>
@@ -198,7 +267,7 @@
                             <div class="feature-action">
                                 <button class="feature-btn" onclick="showFeatureDemo('latency')">
                                     <span class="btn-text">See in Action</span>
-                                    <span class="btn-arrow">→</span>
+                                    <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
                                 </button>
                             </div>
                         </div>
@@ -209,7 +278,7 @@
                         <div class="feature-visual">
                             <div class="feature-circle">
                                 <div class="feature-icon-wrapper">
-                                    <span class="feature-icon">🎯</span>
+                                    <span class="feature-icon"><i class="fas fa-bullseye"></i></span>
                                     <div class="icon-glow"></div>
                                 </div>
                                 <div class="quality-indicator">
@@ -238,7 +307,7 @@
                             <div class="feature-action">
                                 <button class="feature-btn" onclick="showFeatureDemo('quality')">
                                     <span class="btn-text">See in Action</span>
-                                    <span class="btn-arrow">→</span>
+                                    <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
                                 </button>
                             </div>
                         </div>
@@ -249,14 +318,10 @@
                         <div class="feature-visual">
                             <div class="feature-circle">
                                 <div class="feature-icon-wrapper">
-                                    <span class="feature-icon">🔗</span>
+                                    <span class="feature-icon"><i class="fas fa-link"></i></span>
                                     <div class="icon-glow"></div>
                                 </div>
-                                <div class="connection-animation">
-                                    <div class="device-phone">📱</div>
-                                    <div class="connection-line"></div>
-                                    <div class="device-pc">🖥️</div>
-                                </div>
+
                             </div>
                         </div>
                         <div class="feature-content">
@@ -277,7 +342,7 @@
                             <div class="feature-action">
                                 <button class="feature-btn" onclick="showFeatureDemo('connection')">
                                     <span class="btn-text">See in Action</span>
-                                    <span class="btn-arrow">→</span>
+                                    <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
                                 </button>
                             </div>
                         </div>
@@ -288,11 +353,11 @@
                         <div class="feature-visual">
                             <div class="feature-circle">
                                 <div class="feature-icon-wrapper">
-                                    <span class="feature-icon">🎮</span>
+                                    <span class="feature-icon"><i class="fas fa-gamepad"></i></span>
                                     <div class="icon-glow"></div>
                                 </div>
                                 <div class="gaming-indicator">
-                                    <div class="game-controller">🎮</div>
+                                    <div class="game-controller"></div>
                                     <div class="performance-dots">
                                         <div class="dot"></div>
                                         <div class="dot"></div>
@@ -319,30 +384,21 @@
                             <div class="feature-action">
                                 <button class="feature-btn" onclick="showFeatureDemo('gaming')">
                                     <span class="btn-text">See in Action</span>
-                                    <span class="btn-arrow">→</span>
+                                    <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Feature 5: Recording & Streaming -->
-                    <div class="feature-showcase-item" data-feature="recording">
+                    <!-- Feature 5: Team & Clients -->
+                    <div class="feature-showcase-item" data-feature="team">
                         <div class="feature-visual">
                             <div class="feature-circle">
                                 <div class="feature-icon-wrapper">
-                                    <span class="feature-icon">📊</span>
+                                    <span class="feature-icon"><i class="fas fa-users"></i></span>
                                     <div class="icon-glow"></div>
                                 </div>
-                                <div class="recording-indicator">
-                                    <div class="record-button">
-                                        <div class="record-dot"></div>
-                                    </div>
-                                    <div class="audio-waves">
-                                        <div class="wave"></div>
-                                        <div class="wave"></div>
-                                        <div class="wave"></div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         <div class="feature-content">
@@ -361,9 +417,9 @@
                                 </div>
                             </div>
                             <div class="feature-action">
-                                <button class="feature-btn" onclick="showFeatureDemo('recording')">
+                                <button class="feature-btn" onclick="showFeatureDemo('team')">
                                     <span class="btn-text">See in Action</span>
-                                    <span class="btn-arrow">→</span>
+                                    <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
                                 </button>
                             </div>
                         </div>
@@ -374,17 +430,10 @@
                         <div class="feature-visual">
                             <div class="feature-circle">
                                 <div class="feature-icon-wrapper">
-                                    <span class="feature-icon">🛡️</span>
+                                    <span class="feature-icon"><i class="fas fa-shield-alt"></i></span>
                                     <div class="icon-glow"></div>
                                 </div>
-                                <div class="security-indicator">
-                                    <div class="shield-icon">🛡️</div>
-                                    <div class="security-rings">
-                                        <div class="ring"></div>
-                                        <div class="ring"></div>
-                                        <div class="ring"></div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         <div class="feature-content">
@@ -405,7 +454,7 @@
                             <div class="feature-action">
                                 <button class="feature-btn" onclick="showFeatureDemo('security')">
                                     <span class="btn-text">See in Action</span>
-                                    <span class="btn-arrow">→</span>
+                                    <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
                                 </button>
                             </div>
                         </div>
@@ -437,7 +486,7 @@
                         </div>
                         <div class="step-content">
                             <div class="step-header">
-                                <div class="step-icon">📥</div>
+                                <div class="step-icon"><i class="fas fa-download"></i></div>
                                 <h3 class="step-title">Download & Install</h3>
                             </div>
                             <p class="step-description">Get Instaflow on your PC with our smart installer that handles everything automatically.</p>
@@ -460,7 +509,7 @@
                         </div>
                         <div class="step-content">
                             <div class="step-header">
-                                <div class="step-icon">⚙️</div>
+                                <div class="step-icon"><i class="fas fa-cog"></i></div>
                                 <h3 class="step-title">Enable Developer Mode</h3>
                             </div>
                             <p class="step-description">Unlock your Android's potential by enabling USB debugging in just a few taps.</p>
@@ -483,7 +532,7 @@
                         </div>
                         <div class="step-content">
                             <div class="step-header">
-                                <div class="step-icon">🔗</div>
+                                <div class="step-icon"><i class="fas fa-link"></i></div>
                                 <h3 class="step-title">Connect & Sync</h3>
                             </div>
                             <p class="step-description">Link your devices seamlessly via USB or WiFi for instant mirroring capability.</p>
@@ -505,7 +554,7 @@
                         </div>
                         <div class="step-content">
                             <div class="step-header">
-                                <div class="step-icon">🎯</div>
+                                <div class="step-icon"><i class="fas fa-bullseye"></i></div>
                                 <h3 class="step-title">Start Mirroring</h3>
                             </div>
                             <p class="step-description">Launch Instaflow and experience professional-grade screen projection instantly.</p>
@@ -523,7 +572,7 @@
                     <button class="guide-cta-btn" onclick="showGuideModal()">
                         <span class="btn-glow"></span>
                         <span class="btn-content">
-                            <span class="btn-icon">📖</span>
+                            <span class="btn-icon"><i class="fas fa-book"></i></span>
                             <span class="btn-text">View Complete Guide</span>
                         </span>
                     </button>
@@ -564,7 +613,7 @@
                     <div class="faq-item" data-faq="1">
                         <div class="faq-question">
                             <div class="faq-icon">
-                                <span class="faq-icon-text">⚡</span>
+                                <span class="faq-icon-text"><i class="fas fa-bolt"></i></span>
                                 <div class="faq-icon-glow"></div>
                             </div>
                             <h3 class="faq-question-text">Is Instaflow safe for my account?</h3>
@@ -578,15 +627,15 @@
                                 <p>Instaflow uses human-like timing, device simulation, and rate limits aligned with platform best practices. You control speed profiles, warm-up periods, and daily caps so activity stays natural.</p>
                                 <div class="answer-features">
                                     <div class="answer-feature">
-                                        <span class="feature-dot">⚡</span>
+                                        <span class="feature-dot"><i class="fas fa-bolt"></i></span>
                                         <span>Instant connection</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">🎯</span>
+                                        <span class="feature-dot"><i class="fas fa-bullseye"></i></span>
                                         <span>HD quality output</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">🔒</span>
+                                        <span class="feature-dot"><i class="fas fa-lock"></i></span>
                                         <span>Secure & private</span>
                                     </div>
                                 </div>
@@ -598,7 +647,7 @@
                     <div class="faq-item" data-faq="2">
                         <div class="faq-question">
                             <div class="faq-icon">
-                                <span class="faq-icon-text">📱</span>
+                                <span class="faq-icon-text"><i class="fas fa-mobile-alt"></i></span>
                                 <div class="faq-icon-glow"></div>
                             </div>
                             <h3 class="faq-question-text">What can I automate?</h3>
@@ -612,15 +661,15 @@
                                 <p>Schedule posts/stories, auto‑DM new followers, reply to comments, send keyword triggers, welcome leads, and run growth interactions (like/save/follow/unfollow) within safe ranges.</p>
                                 <div class="answer-features">
                                     <div class="answer-feature">
-                                        <span class="feature-dot">📱</span>
+                                        <span class="feature-dot"><i class="fab fa-android"></i></span>
                                         <span>Android 5.0+</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">🖥️</span>
+                                        <span class="feature-dot"><i class="fab fa-windows"></i></span>
                                         <span>Windows 10/11</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">🍎</span>
+                                        <span class="feature-dot"><i class="fab fa-apple"></i></span>
                                         <span>macOS 10.14+</span>
                                     </div>
                                 </div>
@@ -632,7 +681,7 @@
                     <div class="faq-item" data-faq="3">
                         <div class="faq-question">
                             <div class="faq-icon">
-                                <span class="faq-icon-text">🎁</span>
+                                <span class="faq-icon-text"><i class="fas fa-gift"></i></span>
                                 <div class="faq-icon-glow"></div>
                             </div>
                             <h3 class="faq-question-text">Do you offer a free trial?</h3>
@@ -646,15 +695,15 @@
                                 <p>Yes—get 7 days free with all features. No credit card required. Cancel anytime during the trial.</p>
                                 <div class="answer-features">
                                     <div class="answer-feature">
-                                        <span class="feature-dot">🎁</span>
+                                        <span class="feature-dot"><i class="fas fa-gift"></i></span>
                                         <span>7-day free trial</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">💳</span>
+                                        <span class="feature-dot"><i class="fas fa-credit-card"></i></span>
                                         <span>No credit card</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">✨</span>
+                                        <span class="feature-dot"><i class="fas fa-magic"></i></span>
                                         <span>Full features</span>
                                     </div>
                                 </div>
@@ -666,7 +715,7 @@
                     <div class="faq-item" data-faq="4">
                         <div class="faq-question">
                             <div class="faq-icon">
-                                <span class="faq-icon-text">🎬</span>
+                                <span class="faq-icon-text"><i class="fas fa-film"></i></span>
                                 <div class="faq-icon-glow"></div>
                             </div>
                             <h3 class="faq-question-text">Can multiple accounts be managed?</h3>
@@ -700,7 +749,7 @@
                     <div class="faq-item" data-faq="5">
                         <div class="faq-question">
                             <div class="faq-icon">
-                                <span class="faq-icon-text">🔐</span>
+                                <span class="faq-icon-text"><i class="fas fa-key"></i></span>
                                 <div class="faq-icon-glow"></div>
                             </div>
                             <h3 class="faq-question-text">How secure is my data?</h3>
@@ -714,15 +763,15 @@
                                 <p>Your privacy and security are our top priorities. We use 256‑bit encryption, 2FA, and store only what’s necessary. Export or delete your data anytime.</p>
                                 <div class="answer-features">
                                     <div class="answer-feature">
-                                        <span class="feature-dot">🔐</span>
+                                        <span class="feature-dot"><i class="fas fa-key"></i></span>
                                         <span>256-bit encryption</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">🏠</span>
+                                        <span class="feature-dot"><i class="fas fa-home"></i></span>
                                         <span>Local processing</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">🛡️</span>
+                                        <span class="feature-dot"><i class="fas fa-shield-alt"></i></span>
                                         <span>Zero data collection</span>
                                     </div>
                                 </div>
@@ -734,7 +783,7 @@
                     <div class="faq-item" data-faq="6">
                         <div class="faq-question">
                             <div class="faq-icon">
-                                <span class="faq-icon-text">💬</span>
+                                <span class="faq-icon-text"><i class="fas fa-comments"></i></span>
                                 <div class="faq-icon-glow"></div>
                             </div>
                             <h3 class="faq-question-text">What if I need technical support?</h3>
@@ -748,15 +797,15 @@
                                 <p>We provide comprehensive technical support for all users. Free trial users get email support, while Professional and Enterprise users receive priority support with faster response times and dedicated assistance.</p>
                                 <div class="answer-features">
                                     <div class="answer-feature">
-                                        <span class="feature-dot">📧</span>
+                                        <span class="feature-dot"><i class="fas fa-envelope"></i></span>
                                         <span>Email support</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">⚡</span>
+                                        <span class="feature-dot"><i class="fas fa-bolt"></i></span>
                                         <span>Priority response</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">👨‍💻</span>
+                                        <span class="feature-dot"><i class="fas fa-user-tie"></i></span>
                                         <span>Expert assistance</span>
                                     </div>
                                 </div>
@@ -770,7 +819,7 @@
                         <h3 class="faq-cta-title">Still have <span class="highlight-text">questions</span>?</h3>
                         <p class="faq-cta-text">Our support team is here to help you get the most out of Instaflow</p>
                         <button class="faq-cta-btn">
-                            <span class="btn-icon">💬</span>
+                            <span class="btn-icon"><i class="fas fa-comments"></i></span>
                             Contact Support
                         </button>
                     </div>
@@ -787,11 +836,11 @@
                 </div>
                 <div class="download-buttons">
                     <a href="checkout.html?plan=trial&price=0&period=7days" class="download-btn-main android">
-                        <span class="play-icon">▶</span>
+                        <span class="play-icon"><i class="fas fa-play"></i></span>
                         Get Now
                     </a>
                     <button class="download-btn-main ios">
-                        <span class="apple-icon">📱</span>
+                        <span class="apple-icon"><i class="fas fa-mobile-alt"></i></span>
                         View Demo
                     </button>
                 </div>
@@ -834,20 +883,22 @@
         // Authentication State Management
         function switchToLoggedInState(email) {
             // Hide guest state, show logged in state
-            document.querySelector('.guest-state').style.display = 'none';
-            document.querySelector('.logged-in-state').style.display = 'flex';
+            document.querySelectorAll('.guest-state').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.logged-in-state').forEach(el => el.style.display = 'flex');
             
             // Update profile name with email
-            const profileName = document.querySelector('.profile-name');
-            if (profileName) {
-                profileName.textContent = email.split('@')[0]; // Show username part of email
-            }
+            const profileNames = document.querySelectorAll('.profile-name');
+            profileNames.forEach(profileName => {
+                if (profileName) {
+                    profileName.textContent = email.split('@')[0]; // Show username part of email
+                }
+            });
         }
 
         function switchToGuestState() {
             // Show guest state, hide logged in state
-            document.querySelector('.guest-state').style.display = 'flex';
-            document.querySelector('.logged-in-state').style.display = 'none';
+            document.querySelectorAll('.guest-state').forEach(el => el.style.display = 'flex');
+            document.querySelectorAll('.logged-in-state').forEach(el => el.style.display = 'none');
         }
 
         function checkAuthState() {
@@ -869,24 +920,43 @@
             dropdown.classList.toggle('show');
             profileBtn.classList.toggle('active');
         }
+        
+        function toggleMobileProfileMenu() {
+            const mobileProfileDropdown = document.getElementById('mobile-profile-dropdown');
+            const profileBtn = document.querySelector('.mobile-profile-btn');
+            
+            mobileProfileDropdown.classList.toggle('show');
+            profileBtn.classList.toggle('active');
+        }
 
         function handleLogout() {
-            // Show loading state
-            const profileBtn = document.querySelector('.profile-btn');
-            const originalText = profileBtn.innerHTML;
-            profileBtn.innerHTML = '<span class="profile-avatar">⏳</span> <span class="profile-name">Signing Out...</span>';
+            // Show loading state for both desktop and mobile
+            const profileBtns = document.querySelectorAll('.profile-btn');
+            const originalTexts = [];
+            
+            profileBtns.forEach(btn => {
+                originalTexts.push(btn.innerHTML);
+                btn.innerHTML = '<span class="profile-avatar">⏳</span> <span class="profile-name">Signing Out...</span>';
+            });
             
             // Simulate logout process
             setTimeout(() => {
                 // Switch to guest state
                 switchToGuestState();
                 
-                // Reset profile button
-                profileBtn.innerHTML = originalText;
+                // Reset profile buttons
+                profileBtns.forEach((btn, index) => {
+                    btn.innerHTML = originalTexts[index];
+                });
                 
-                // Close dropdown
-                document.getElementById('profile-dropdown').classList.remove('show');
-                profileBtn.classList.remove('active');
+                // Close dropdowns
+                const dropdowns = document.querySelectorAll('.profile-dropdown, .mobile-profile-dropdown');
+                dropdowns.forEach(dropdown => dropdown.classList.remove('show'));
+                
+                profileBtns.forEach(btn => btn.classList.remove('active'));
+                
+                // Close mobile menu if open
+                closeMobileMenu();
                 
                 // Show success message
                 alert('Signed out successfully!');
@@ -895,13 +965,17 @@
 
         // Close dropdown when clicking outside
         document.addEventListener('click', function(e) {
-            const profileMenu = document.querySelector('.profile-menu');
-            const dropdown = document.getElementById('profile-dropdown');
+            const profileMenus = document.querySelectorAll('.profile-menu, .mobile-profile-menu');
+            const dropdowns = document.querySelectorAll('.profile-dropdown, .mobile-profile-dropdown');
             
-            if (profileMenu && dropdown && !profileMenu.contains(e.target)) {
-                dropdown.classList.remove('show');
-                document.querySelector('.profile-btn').classList.remove('active');
-            }
+            profileMenus.forEach((profileMenu, index) => {
+                const dropdown = dropdowns[index];
+                if (profileMenu && dropdown && !profileMenu.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                    const profileBtn = profileMenu.querySelector('.profile-btn');
+                    if (profileBtn) profileBtn.classList.remove('active');
+                }
+            });
         });
 
         // Initialize authentication state on page load

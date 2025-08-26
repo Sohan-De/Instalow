@@ -365,31 +365,40 @@ async function checkAuthState() {
 // Switch to logged in state
 function switchToLoggedInState(email) {
     // Hide guest state, show logged in state
-    const guestState = document.querySelector('.guest-state');
-    const loggedInState = document.querySelector('.logged-in-state');
+    document.querySelectorAll('.guest-state').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.logged-in-state').forEach(el => el.style.display = 'flex');
     
-    if (guestState && loggedInState) {
-        guestState.style.display = 'none';
-        loggedInState.style.display = 'flex';
-        
-        // Update profile name with email
-        const profileName = document.querySelector('.profile-name');
+    // Update profile name with email
+    const profileNames = document.querySelectorAll('.profile-name');
+    profileNames.forEach(profileName => {
         if (profileName) {
             profileName.textContent = email.split('@')[0]; // Show username part of email
         }
-    }
+    });
+    
+    // Check if user is admin and show/hide dashboard link
+    const adminDashboardLinks = document.querySelectorAll('.admin-only');
+    adminDashboardLinks.forEach(adminDashboardLink => {
+        if (adminDashboardLink) {
+            const isAdmin = email === 'admin@instaflow.com' || 
+                           email === 'sohan@instaflow.com' ||
+                           email === 'sohan@gmail.com' ||      
+                           email === 'sohan.khan@gmail.com';   
+            
+            if (isAdmin) {
+                adminDashboardLink.style.display = 'block';
+            } else {
+                adminDashboardLink.style.display = 'none';
+            }
+        }
+    });
 }
 
 // Switch to guest state
 function switchToGuestState() {
     // Show guest state, hide logged in state
-    const guestState = document.querySelector('.guest-state');
-    const loggedInState = document.querySelector('.logged-in-state');
-    
-    if (guestState && loggedInState) {
-        guestState.style.display = 'flex';
-        loggedInState.style.display = 'none';
-    }
+    document.querySelectorAll('.guest-state').forEach(el => el.style.display = 'flex');
+    document.querySelectorAll('.logged-in-state').forEach(el => el.style.display = 'none');
 }
 
 // Close profile dropdown when clicking outside

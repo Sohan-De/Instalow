@@ -1836,3 +1836,81 @@ function scrollToTop() {
         behavior: 'smooth'
     });
 }
+
+// Mobile Menu Functions
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu-overlay');
+    const hamburger = document.querySelector('.hamburger-menu');
+    const body = document.body;
+    
+    if (mobileMenu.classList.contains('active')) {
+        // Close menu
+        mobileMenu.classList.remove('active');
+        hamburger.classList.remove('active');
+        body.classList.remove('mobile-menu-open');
+        body.style.overflow = 'auto';
+        body.style.position = 'static';
+        body.style.height = 'auto';
+    } else {
+        // Open menu
+        mobileMenu.classList.add('active');
+        hamburger.classList.add('active');
+        body.classList.add('mobile-menu-open');
+        body.style.overflow = 'hidden';
+        body.style.position = 'fixed';
+        body.style.width = '100%';
+        body.style.top = `-${window.scrollY}px`;
+    }
+}
+
+function closeMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu-overlay');
+    const hamburger = document.querySelector('.hamburger-menu');
+    const body = document.body;
+    
+    if (mobileMenu) {
+        mobileMenu.classList.remove('active');
+    }
+    if (hamburger) {
+        hamburger.classList.remove('active');
+    }
+    
+    // Restore scroll position
+    const scrollY = body.style.top;
+    body.classList.remove('mobile-menu-open');
+    body.style.position = 'static';
+    body.style.height = 'auto';
+    body.style.overflow = 'auto';
+    body.style.top = '';
+    
+    if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
+}
+
+function toggleMobileProfileMenu() {
+    const mobileProfileDropdown = document.getElementById('mobile-profile-dropdown');
+    const profileBtn = document.querySelector('.mobile-profile-btn');
+    
+    mobileProfileDropdown.classList.toggle('show');
+    profileBtn.classList.toggle('active');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(e) {
+    const mobileMenu = document.getElementById('mobile-menu-overlay');
+    const hamburger = document.querySelector('.hamburger-menu');
+    
+    if (mobileMenu && mobileMenu.classList.contains('active') && 
+        !mobileMenu.contains(e.target) && 
+        !hamburger.contains(e.target)) {
+        closeMobileMenu();
+    }
+});
+
+// Close mobile menu on escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeMobileMenu();
+    }
+});

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="lab-theme.css">
     <link rel="stylesheet" href="pricing.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
          <!-- Basic fallback styles -->
      <style>
@@ -50,16 +51,84 @@
                     <h2 class="logo-text">Instaflow</h2>
                 </a>
             </div>
-                        <div class="nav-links">
-            <a href="features-new.html" class="nav-link">Features</a>
-            <a href="download.html" class="nav-link">Download</a>
-            <a href="guide.html" class="nav-link">Guide</a>
             
-            <a href="partners.html" class="nav-link">Partners</a>
-            <a href="contact.html" class="nav-link">Contact</a>
-            <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
-        </div>
-            <div class="nav-auth">
+            <!-- Hamburger Menu Button -->
+            <button class="hamburger-menu" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Mobile Menu Overlay -->
+            <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+                <div class="mobile-menu-content">
+                    <div class="mobile-menu-header">
+                        <h3 class="mobile-menu-title">Menu</h3>
+                        <button class="mobile-menu-close" onclick="toggleMobileMenu()" aria-label="Close menu">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mobile-nav-links">
+                        <a href="features-new.html" class="mobile-nav-link" onclick="closeMobileMenu()">Features</a>
+                        <a href="download.html" class="mobile-nav-link" onclick="closeMobileMenu()">Download</a>
+                        <a href="guide.html" class="mobile-nav-link" onclick="closeMobileMenu()">Guide</a>
+                        <a href="partners.html" class="mobile-nav-link" onclick="closeMobileMenu()">Partners</a>
+                        <a href="contact.html" class="mobile-nav-link" onclick="closeMobileMenu()">Contact</a>
+                        <a href="pricing.html" class="mobile-nav-link mobile-pricing-link" onclick="closeMobileMenu()">Get Pro</a>
+                    </div>
+                    
+                    <div class="mobile-auth-section">
+                        <!-- Guest State (when not logged in) -->
+                        <div class="mobile-auth-buttons guest-state">
+                            <a href="auth.html" class="mobile-auth-btn signin-btn" onclick="closeMobileMenu()">Sign In</a>
+                            <a href="auth.html?form=signup" class="mobile-auth-btn signup-btn" onclick="closeMobileMenu()">Sign Up</a>
+                        </div>
+                        
+                        <!-- Logged In State (when user is authenticated) -->
+                        <div class="mobile-auth-buttons logged-in-state" style="display: none;">
+                            <div class="mobile-profile-menu">
+                                <button class="mobile-profile-btn" onclick="toggleMobileProfileMenu()">
+                                    <span class="profile-avatar"><i class="fas fa-user"></i></span>
+                                    <span class="profile-name">User</span>
+                                    <span class="profile-arrow"><i class="fas fa-chevron-down"></i></span>
+                                </button>
+                                <div class="mobile-profile-dropdown" id="mobile-profile-dropdown">
+                                    <a href="profile.html" class="mobile-dropdown-item" onclick="closeMobileMenu()">
+                                        <span class="item-icon"><i class="fas fa-user"></i></span>
+                                        Profile
+                                    </a>
+                                    <a href="admin-dashboard.html" class="mobile-dropdown-item admin-only" onclick="closeMobileMenu()">
+                                        <span class="item-icon"><i class="fas fa-chart-line"></i></span>
+                                        Dashboard
+                                    </a>
+                                    <a href="#" class="mobile-dropdown-item" onclick="closeMobileMenu()">
+                                        <span class="item-icon"><i class="fas fa-credit-card"></i></span>
+                                        Billing
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="mobile-dropdown-item logout-btn" onclick="handleLogout(); closeMobileMenu();">
+                                        <span class="item-icon"><i class="fas fa-sign-out-alt"></i></span>
+                                        Sign Out
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-links desktop-nav">
+                <a href="features-new.html" class="nav-link">Features</a>
+                <a href="download.html" class="nav-link">Download</a>
+                <a href="guide.html" class="nav-link">Guide</a>
+                <a href="partners.html" class="nav-link">Partners</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="pricing.html" class="nav-link pricing-link">Get Pro</a>
+            </div>
+            
+            <div class="nav-auth desktop-nav">
                 <!-- Guest State (when not logged in) -->
                 <div class="auth-buttons guest-state">
                     <a href="auth.html" class="auth-btn signin-btn">Sign In</a>
@@ -70,26 +139,26 @@
                 <div class="auth-buttons logged-in-state" style="display: none;">
                     <div class="profile-menu">
                         <button class="profile-btn" onclick="toggleProfileMenu()">
-                            <span class="profile-avatar">👤</span>
+                            <span class="profile-avatar"><i class="fas fa-user"></i></span>
                             <span class="profile-name">User</span>
-                            <span class="profile-arrow">▼</span>
+                            <span class="profile-arrow"><i class="fas fa-chevron-down"></i></span>
                         </button>
                         <div class="profile-dropdown" id="profile-dropdown">
                             <a href="profile.html" class="dropdown-item">
-                                <span class="item-icon">👤</span>
+                                <span class="item-icon"><i class="fas fa-user"></i></span>
                                 Profile
                             </a>
                             <a href="admin-dashboard.html" class="dropdown-item admin-only">
-                                <span class="item-icon">📊</span>
+                                <span class="item-icon"><i class="fas fa-chart-line"></i></span>
                                 Dashboard
                             </a>
                             <a href="#" class="dropdown-item">
-                                <span class="item-icon">💳</span>
+                                <span class="item-icon"><i class="fas fa-credit-card"></i></span>
                                 Billing
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item logout-btn" onclick="handleLogout()">
-                                <span class="item-icon">🚪</span>
+                                <span class="item-icon"><i class="fas fa-sign-out-alt"></i></span>
                                 Sign Out
                             </a>
                         </div>
@@ -156,30 +225,30 @@
                     
                     <div class="table-row">
                         <div class="feature-name">AI Content Generation</div>
-                        <div class="feature-value">❌</div>
-                        <div class="feature-value">✅</div>
-                        <div class="feature-value">✅</div>
+                        <div class="feature-value"><i class="fas fa-times"></i></div>
+                        <div class="feature-value"><i class="fas fa-check"></i></div>
+                        <div class="feature-value"><i class="fas fa-check"></i></div>
                     </div>
                     
                     <div class="table-row">
                         <div class="feature-name">Advanced Analytics</div>
-                        <div class="feature-value">❌</div>
-                        <div class="feature-value">✅</div>
-                        <div class="feature-value">✅</div>
+                        <div class="feature-value"><i class="fas fa-times"></i></div>
+                        <div class="feature-value"><i class="fas fa-check"></i></div>
+                        <div class="feature-value"><i class="fas fa-check"></i></div>
                     </div>
                     
                     <div class="table-row">
                         <div class="feature-name">Priority Support</div>
-                        <div class="feature-value">❌</div>
-                        <div class="feature-value">✅</div>
-                        <div class="feature-value">✅</div>
+                        <div class="feature-value"><i class="fas fa-times"></i></div>
+                        <div class="feature-value"><i class="fas fa-check"></i></div>
+                        <div class="feature-value"><i class="fas fa-check"></i></div>
                     </div>
                     
                     <div class="table-row">
                         <div class="feature-name">Team Management</div>
-                        <div class="feature-value">❌</div>
-                        <div class="feature-value">❌</div>
-                        <div class="feature-value">✅</div>
+                        <div class="feature-value"><i class="fas fa-times"></i></div>
+                        <div class="feature-value"><i class="fas fa-times"></i></div>
+                        <div class="feature-value"><i class="fas fa-check"></i></div>
                     </div>
                 </div>
             </div>
@@ -196,7 +265,7 @@
                     <div class="faq-item" data-faq="1">
                         <div class="faq-question" onclick="toggleFAQ(this)">
                             <div class="faq-icon">
-                                <span class="faq-icon-text">💳</span>
+                                <span class="faq-icon-text"><i class="fas fa-credit-card"></i></span>
                                 <div class="faq-icon-glow"></div>
                             </div>
                             <h3 class="faq-question-text">Can I change my plan later?</h3>
@@ -210,15 +279,15 @@
                                 <p>Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately and you'll only pay the difference for the remaining billing period.</p>
                                 <div class="answer-features">
                                     <div class="answer-feature">
-                                        <span class="feature-dot">⚡</span>
+                                        <span class="feature-dot"><i class="fas fa-bolt"></i></span>
                                         <span>Instant changes</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">💰</span>
+                                        <span class="feature-dot"><i class="fas fa-dollar-sign"></i></span>
                                         <span>Prorated billing</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">🔄</span>
+                                        <span class="feature-dot"><i class="fas fa-sync-alt"></i></span>
                                         <span>No lock-in</span>
                                     </div>
                                 </div>
@@ -230,7 +299,7 @@
                     <div class="faq-item" data-faq="2">
                         <div class="faq-question" onclick="toggleFAQ(this)">
                             <div class="faq-icon">
-                                <span class="faq-icon-text">🎁</span>
+                                <span class="faq-icon-text"><i class="fas fa-gift"></i></span>
                                 <div class="faq-icon-glow"></div>
                             </div>
                             <h3 class="faq-question-text">Is there a free trial?</h3>
@@ -244,11 +313,11 @@
                                 <p>Yes! All paid plans come with a 7-day free trial. No credit card required to start. Experience all premium features before committing.</p>
                                 <div class="answer-features">
                                     <div class="answer-feature">
-                                        <span class="feature-dot">🎁</span>
+                                        <span class="feature-dot"><i class="fas fa-gift"></i></span>
                                         <span>7-day free trial</span>
                                     </div>
                                     <div class="answer-feature">
-                                        <span class="feature-dot">💳</span>
+                                        <span class="feature-dot"><i class="fas fa-credit-card"></i></span>
                                         <span>No credit card</span>
                                     </div>
                                     <div class="answer-feature">
@@ -376,35 +445,39 @@
         // Authentication State Management (same as home page)
         function switchToLoggedInState(email) {
             // Hide guest state, show logged in state
-            document.querySelector('.guest-state').style.display = 'none';
-            document.querySelector('.logged-in-state').style.display = 'flex';
+            document.querySelectorAll('.guest-state').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.logged-in-state').forEach(el => el.style.display = 'flex');
             
             // Update profile name with email
-            const profileName = document.querySelector('.profile-name');
-            if (profileName) {
-                profileName.textContent = email.split('@')[0]; // Show username part of email
-            }
+            const profileNames = document.querySelectorAll('.profile-name');
+            profileNames.forEach(profileName => {
+                if (profileName) {
+                    profileName.textContent = email.split('@')[0]; // Show username part of email
+                }
+            });
             
             // Check if user is admin and show/hide dashboard link
-            const adminDashboardLink = document.querySelector('.admin-only');
-            if (adminDashboardLink) {
-                const isAdmin = email === 'admin@instaflow.com' || 
-                               email === 'sohan@instaflow.com' ||
-                               email === 'sohan@gmail.com' ||      
-                               email === 'sohan.khan@gmail.com';   
-                
-                if (isAdmin) {
-                    adminDashboardLink.style.display = 'block';
-                } else {
-                    adminDashboardLink.style.display = 'none';
+            const adminDashboardLinks = document.querySelectorAll('.admin-only');
+            adminDashboardLinks.forEach(adminDashboardLink => {
+                if (adminDashboardLink) {
+                    const isAdmin = email === 'admin@instaflow.com' || 
+                                   email === 'sohan@instaflow.com' ||
+                                   email === 'sohan@gmail.com' ||      
+                                   email === 'sohan.khan@gmail.com';   
+                    
+                    if (isAdmin) {
+                        adminDashboardLink.style.display = 'block';
+                    } else {
+                        adminDashboardLink.style.display = 'none';
+                    }
                 }
-            }
+            });
         }
 
         function switchToGuestState() {
             // Show guest state, hide logged in state
-            document.querySelector('.guest-state').style.display = 'flex';
-            document.querySelector('.logged-in-state').style.display = 'none';
+            document.querySelectorAll('.guest-state').forEach(el => el.style.display = 'flex');
+            document.querySelectorAll('.logged-in-state').forEach(el => el.style.display = 'none');
         }
 
         function checkAuthState() {
@@ -471,6 +544,84 @@
             console.log('Logo clicked, navigating to home page');
             window.location.href = 'index.html';
         }
+        
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu-overlay');
+            const hamburger = document.querySelector('.hamburger-menu');
+            const body = document.body;
+            
+            if (mobileMenu.classList.contains('active')) {
+                // Close menu
+                mobileMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                body.classList.remove('mobile-menu-open');
+                body.style.overflow = 'auto';
+                body.style.position = 'static';
+                body.style.height = 'auto';
+            } else {
+                // Open menu
+                mobileMenu.classList.add('active');
+                hamburger.classList.add('active');
+                body.classList.add('mobile-menu-open');
+                body.style.overflow = 'hidden';
+                body.style.position = 'fixed';
+                body.style.width = '100%';
+                body.style.top = `-${window.scrollY}px`;
+            }
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu-overlay');
+            const hamburger = document.querySelector('.hamburger-menu');
+            const body = document.body;
+            
+            if (mobileMenu) {
+                mobileMenu.classList.remove('active');
+            }
+            if (hamburger) {
+                hamburger.classList.remove('active');
+            }
+            
+            // Restore scroll position
+            const scrollY = body.style.top;
+            body.classList.remove('mobile-menu-open');
+            body.style.position = 'static';
+            body.style.height = 'auto';
+            body.style.overflow = 'auto';
+            body.style.top = '';
+            
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            }
+        }
+        
+        function toggleMobileProfileMenu() {
+            const mobileProfileDropdown = document.getElementById('mobile-profile-dropdown');
+            const profileBtn = document.querySelector('.mobile-profile-btn');
+            
+            mobileProfileDropdown.classList.toggle('show');
+            profileBtn.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const mobileMenu = document.getElementById('mobile-menu-overlay');
+            const hamburger = document.querySelector('.hamburger-menu');
+            
+            if (mobileMenu && mobileMenu.classList.contains('active') && 
+                !mobileMenu.contains(e.target) && 
+                !hamburger.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close mobile menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
     </script>
     
     <!-- Load pricing.js for FAQ functionality -->
