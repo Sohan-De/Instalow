@@ -334,6 +334,29 @@
     overflow-x: auto;
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Ensure smooth scrolling on touch devices */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(20, 255, 114, 0.3) transparent;
+}
+
+/* Custom scrollbar for webkit browsers */
+.data-table::-webkit-scrollbar {
+    height: 8px;
+}
+
+.data-table::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.data-table::-webkit-scrollbar-thumb {
+    background: rgba(20, 255, 114, 0.3);
+    border-radius: 4px;
+}
+
+.data-table::-webkit-scrollbar-thumb:hover {
+    background: rgba(20, 255, 114, 0.5);
 }
 
 .admin-table {
@@ -650,14 +673,314 @@
     }
 }
 
-@media (max-width: 768px) {
+/* Tablet: Optimize table layout for medium screens */
+@media (max-width: 1024px) {
+    .dashboard-container {
+        padding: 0 1rem;
+    }
+    
+    .admin-table {
+        font-size: 0.85rem;
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        padding: 12px 15px;
+    }
+    
+    /* Ensure table content is visible on tablet */
+    .data-table {
+        overflow-x: auto;
+        border-radius: 12px;
+        /* Add some padding to prevent content from touching edges */
+        padding-bottom: 10px;
+    }
+    
+    /* Ensure table headers stay visible during scroll */
+    .admin-table thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    
+    /* Optimize table cell content for tablet */
+    .admin-table td {
+        min-width: 120px;
+        word-wrap: break-word;
+    }
+    
+    /* Make action buttons more touch-friendly on tablet */
+    .action-btn-small {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        min-width: 40px;
+    }
+    
+    /* Ensure status badges are readable */
+    .status-badge {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        min-width: 70px;
+    }
+    
+    /* Optimize user management section for tablet */
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    /* Ensure user info is readable on tablet */
+    .admin-table td {
+        line-height: 1.4;
+    }
+    
+    /* Make sure email addresses don't break layout */
+    .admin-table td:nth-child(2) {
+        max-width: 200px;
+        word-break: break-all;
+    }
+    
+    /* Optimize plan badges for tablet */
+    .admin-table td:nth-child(3) {
+        min-width: 80px;
+    }
+    
+    /* Ensure date columns are readable */
+    .admin-table td:nth-child(4) {
+        min-width: 100px;
+    }
+    
+    /* Make action buttons accessible on tablet */
+    .admin-table td:nth-child(5) {
+        min-width: 60px;
+    }
+    
+    /* Keys Tab Tablet Optimizations */
+    .keys-summary {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+    
+    .summary-item {
+        padding: 12px 15px;
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+    
+    .summary-icon {
+        font-size: 1.3rem;
+    }
+    
+    .summary-label {
+        font-size: 0.8rem;
+    }
+    
+    .summary-value {
+        font-size: 1.1rem;
+    }
+    
+    /* Search filter optimization for tablet */
+    .search-filter {
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .search-input {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .filter-select {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    /* Key value display optimization for tablet */
+    .key-value {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .key-value code {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+        word-break: break-all;
+        max-width: 100%;
+    }
+    
+    /* Plan badges optimization for tablet */
+    .plan-badge {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+        min-width: 70px;
+    }
+    
+    /* Keys table specific optimizations for tablet */
+    .admin-table th:nth-child(1), /* ID column */
+    .admin-table td:nth-child(1) {
+        min-width: 60px;
+        max-width: 80px;
+    }
+    
+    .admin-table th:nth-child(2), /* Key Value column */
+    .admin-table td:nth-child(2) {
+        min-width: 150px;
+        max-width: 200px;
+    }
+    
+    .admin-table th:nth-child(3), /* Plan column */
+    .admin-table td:nth-child(3) {
+        min-width: 80px;
+        max-width: 100px;
+    }
+    
+    .admin-table th:nth-child(4), /* Status column */
+    .admin-table td:nth-child(4) {
+        min-width: 80px;
+        max-width: 100px;
+    }
+    
+    .admin-table th:nth-child(5), /* Created column */
+    .admin-table td:nth-child(5) {
+        min-width: 100px;
+        max-width: 120px;
+    }
+    
+    .admin-table th:nth-child(6), /* Actions column */
+    .admin-table td:nth-child(6) {
+        min-width: 80px;
+        max-width: 100px;
+    }
+    
+    /* Optimize action buttons for tablet in keys table */
+    .table-actions {
+        flex-direction: column;
+        gap: 6px;
+        align-items: center;
+    }
+    
+    .action-btn-small {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        min-width: 35px;
+    }
+    
+    /* Ensure copy button is touch-friendly on tablet */
+    .copy-btn {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        min-width: 40px;
+    }
+    
+    /* Optimize tab actions for tablet */
+    .tab-actions {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
+    }
+    
+    .action-btn .btn-icon {
+        font-size: 1.1rem;
+    }
+    
+    /* Center header content on tablet */
     .header-content {
         flex-direction: column;
         text-align: center;
+        justify-content: center;
+        align-items: center;
     }
     
     .quick-stats {
         justify-content: center;
+        align-items: center;
+    }
+    
+    .header-left {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .dashboard-title {
+        text-align: center;
+    }
+    
+    .dashboard-subtitle {
+        text-align: center;
+    }
+    
+    /* Additional tablet header optimizations */
+    .dashboard-header {
+        padding: 100px 0 60px 0; /* Adjusted padding for tablet */
+    }
+    
+    .stat-item {
+        min-width: 140px; /* Ensure stats have consistent width on tablet */
+        flex: 1;
+        max-width: 200px;
+    }
+    
+    /* Ensure proper spacing between header elements on tablet */
+    .header-content > * {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Mobile header content - make it smaller and more compact */
+    .dashboard-header {
+        padding: 80px 0 40px 0; /* Reduced padding for mobile */
+    }
+    
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px; /* Reduced gap between elements */
+    }
+    
+    .header-left h1.dashboard-title {
+        font-size: 2.2rem; /* Smaller title for mobile */
+        margin-bottom: 8px; /* Reduced margin */
+    }
+    
+    .header-left .dashboard-subtitle {
+        font-size: 1rem; /* Smaller subtitle for mobile */
+    }
+    
+    .quick-stats {
+        justify-content: center;
+        gap: 15px; /* Reduced gap between stats */
+    }
+    
+    .stat-item {
+        padding: 15px; /* Reduced padding */
+        min-width: 120px; /* Smaller width for mobile */
+        max-width: 150px;
+    }
+    
+    .stat-icon {
+        font-size: 1.5rem; /* Smaller icon for mobile */
+        margin-bottom: 8px;
+    }
+    
+    .stat-value {
+        font-size: 1.4rem; /* Smaller value for mobile */
+        margin-bottom: 4px;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem; /* Smaller label for mobile */
     }
     
     .tab-header {
@@ -700,24 +1023,53 @@
 }
 
 @media (max-width: 480px) {
+    /* Very small mobile - make header even more compact */
     .dashboard-header {
-        padding: 30px 0;
+        padding: 60px 0 30px 0; /* Further reduced padding */
+    }
+    
+    .header-content {
+        gap: 15px; /* Even smaller gap */
     }
     
     .header-left h1.dashboard-title {
-        font-size: 2.5rem;
+        font-size: 1.8rem; /* Much smaller title for very small mobile */
+        margin-bottom: 6px;
+    }
+    
+    .header-left .dashboard-subtitle {
+        font-size: 0.9rem; /* Smaller subtitle */
+    }
+    
+    .quick-stats {
+        gap: 10px; /* Minimal gap between stats */
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
     .stat-item {
-        padding: 15px;
+        padding: 12px; /* Minimal padding */
+        min-width: 100px; /* Very small width */
+        max-width: 120px;
+        flex: 1 1 calc(50% - 5px); /* 2 columns on very small mobile */
+    }
+    
+    .stat-icon {
+        font-size: 1.3rem; /* Very small icon */
+        margin-bottom: 6px;
     }
     
     .stat-value {
-        font-size: 1.5rem;
+        font-size: 1.2rem; /* Very small value */
+        margin-bottom: 3px;
+    }
+    
+    .stat-label {
+        font-size: 0.75rem; /* Very small label */
     }
     
     .tab-content {
-        padding: 20px;
+        padding: 15px; /* Reduced tab content padding */
     }
 }
 

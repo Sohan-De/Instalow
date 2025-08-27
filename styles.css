@@ -480,6 +480,35 @@ body.mobile-menu-open {
     touch-action: none !important;
 }
 
+/* Profile page mobile responsive styles */
+@media (max-width: 768px) {
+    .profile-container {
+        margin: 180px auto 30px auto !important;
+        padding: 30px 20px !important;
+        max-width: 95% !important;
+    }
+    
+    .profile-header h1 {
+        font-size: 2rem !important;
+    }
+    
+    .profile-header p {
+        font-size: 1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-container {
+        margin: 150px auto 30px auto !important;
+        padding: 25px 15px !important;
+        border-radius: 20px !important;
+    }
+    
+    .profile-header h1 {
+        font-size: 1.8rem !important;
+    }
+}
+
 /* Additional scroll prevention for mobile menu */
 .mobile-menu-overlay.active {
     touch-action: none;
@@ -2755,6 +2784,36 @@ body.mobile-menu-open {
     }
 }
 
+/* Mobile: Remove padding for pricing section */
+@media (max-width: 768px) {
+    .pricing-section {
+        padding: 0;
+    }
+    
+    .pricing-container {
+        padding: 0;
+    }
+    
+    .pricing-header {
+        margin-bottom: 4rem; /* Reduce margin on mobile */
+    }
+}
+
+/* Small Mobile: Remove padding for pricing section */
+@media (max-width: 480px) {
+    .pricing-section {
+        padding: 0;
+    }
+    
+    .pricing-container {
+        padding: 0;
+    }
+    
+    .pricing-header {
+        margin-bottom: 3rem; /* Further reduce margin on small mobile */
+    }
+}
+
 .pricing-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -2855,20 +2914,66 @@ body.mobile-menu-open {
 /* Responsive Pricing Grid */
 @media (max-width: 1024px) {
     .pricing-cards {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1.5rem;
+    }
+    
+    /* Ensure pricing page shows 2 cards on tablet */
+    body.lab-theme .pricing-cards {
+        grid-template-columns: repeat(2, 1fr) !important;
         gap: 1.5rem;
     }
 }
 
 @media (max-width: 768px) {
     .pricing-cards {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
         gap: 1.5rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0; /* Remove padding on mobile */
+    }
+    
+    /* Ensure pricing page shows 1 card on mobile */
+    body.lab-theme .pricing-cards {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0; /* Remove padding on mobile */
     }
     
     .pricing-loading {
         min-height: 250px;
         padding: 3rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pricing-cards {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0; /* Remove padding on small mobile */
+    }
+    
+    /* Ensure pricing page shows 1 card on very small mobile */
+    body.lab-theme .pricing-cards {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0; /* Remove padding on small mobile */
+    }
+    
+    .pricing-card {
+        padding: 1.5rem 1.5rem;
+        min-height: 450px;
     }
 }
 
@@ -4506,8 +4611,25 @@ body.mobile-menu-open {
 /* FAQ Responsive Design */
 @media (max-width: 768px) {
     .faq-section {
-        padding: 4rem 1rem;
+        padding: 0 !important; /* Remove padding on mobile with !important */
     }
+    
+    /* Ensure pricing page FAQ section padding is removed */
+    body.lab-theme .faq-section {
+        padding: 0 !important;
+    }
+    
+    .faq-container {
+        padding: 0 1rem; /* Minimal container padding */
+        padding-top: 2rem; /* Reduced top padding */
+    }
+    
+    /* FAQ icon glow 50px on mobile */
+    .faq-icon-glow {
+        width: 50px !important;
+        height: 50px !important;
+    }
+}
     
     .faq-title {
         font-size: 2.5rem;
@@ -4554,6 +4676,27 @@ body.mobile-menu-open {
 }
 
 @media (max-width: 480px) {
+    .faq-section {
+        padding: 0 !important; /* Remove padding on small mobile with !important */
+    }
+    
+    /* Ensure pricing page FAQ section padding is removed */
+    body.lab-theme .faq-section {
+        padding: 0 !important;
+    }
+    
+    .faq-container {
+        padding: 0 0.5rem; /* Minimal container padding */
+        padding-top: 1.5rem; /* Reduced top padding */
+    }
+    
+    /* FAQ icon glow 50px on small mobile */
+    .faq-icon-glow {
+        width: 50px !important;
+        height: 50px !important;
+    }
+}
+    
     .faq-title {
         font-size: 2rem;
     }
@@ -4581,7 +4724,7 @@ body.mobile-menu-open {
     }
     
     .faq-cta {
-        padding: 2rem 1rem;
+        padding: 1.5rem 0.5rem; /* Reduced CTA padding */
     }
     
     .faq-cta-content h3 {

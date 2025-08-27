@@ -19,6 +19,118 @@
              background: #071b0f;
              color: #e9ffee;
          }
+         
+         /* Mobile FAQ responsive styles */
+         @media (max-width: 768px) {
+             .faq-section {
+                 padding: 0 !important;
+             }
+             
+             .faq-container {
+                 padding: 0 1rem !important;
+                 padding-top: 2rem !important;
+             }
+         }
+         
+         @media (max-width: 480px) {
+             .faq-section {
+                 padding: 0 !important;
+             }
+             
+             .faq-container {
+                 padding: 0 0.5rem !important;
+                 padding-top: 1.5rem !important;
+             }
+             
+             /* FAQ icon glow 50px on small mobile */
+             .faq-icon-glow {
+                 width: 50px !important;
+                 height: 50px !important;
+             }
+             
+             /* Plan comparison small mobile optimization */
+             .comparison-section {
+                 padding: 1.5rem 0.25rem !important;
+                 margin: 1.5rem 0 !important;
+             }
+             
+             .section-title {
+                 font-size: 1.8rem !important;
+                 margin-bottom: 1.5rem !important;
+             }
+             
+             .comparison-table {
+                 margin: 0.75rem 0 !important;
+                 border-radius: 12px !important;
+             }
+             
+             .table-header,
+             .table-row {
+                 grid-template-columns: 1.2fr 1fr 1fr 1fr !important;
+                 min-width: 500px !important;
+             }
+             
+             .feature-column, .plan-column {
+                 padding: 12px 8px !important;
+                 font-size: 0.8rem !important;
+                 min-height: 45px !important;
+             }
+             
+             .feature-name {
+                 padding-left: 16px !important;
+                 font-size: 0.9rem !important;
+             }
+             
+             .feature-value {
+                 font-size: 0.8rem !important;
+             }
+         }
+         
+         /* FAQ icon glow 50px on mobile */
+         @media (max-width: 768px) {
+             .faq-icon-glow {
+                 width: 50px !important;
+                 height: 50px !important;
+             }
+             
+             /* Plan comparison mobile optimization */
+             .comparison-section {
+                 padding: 2rem 0.5rem !important;
+                 margin: 2rem 0 !important;
+             }
+             
+             .section-title {
+                 font-size: 2rem !important;
+                 margin-bottom: 2rem !important;
+             }
+             
+             .comparison-table {
+                 margin: 1rem 0 !important;
+                 border-radius: 15px !important;
+                 overflow-x: auto !important;
+             }
+             
+             .table-header,
+             .table-row {
+                 grid-template-columns: 1.5fr 1fr 1fr 1fr !important;
+                 min-width: 600px !important;
+             }
+             
+             .feature-column, .plan-column {
+                 padding: 16px 12px !important;
+                 font-size: 0.9rem !important;
+                 min-height: 50px !important;
+             }
+             
+             .feature-name {
+                 padding-left: 20px !important;
+                 font-size: 1rem !important;
+             }
+             
+             .feature-value {
+                 font-size: 0.9rem !important;
+             }
+         }
      </style>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

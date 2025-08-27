@@ -366,13 +366,14 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .features-container {
-        padding: 1rem;
-        padding-top: 100px;
+        padding: 0; /* Remove padding on mobile */
+        padding-top: 100px; /* Keep only top padding */
     }
     
     .features-card {
         padding: 1.5rem;
         border-radius: 20px;
+        margin: 0; /* Remove margin, keep only top padding */
     }
     
     .features-title {
@@ -403,8 +404,15 @@
 }
 
 @media (max-width: 480px) {
+    .features-container {
+        padding: 0; 
+        padding-top: 100px; /* Keep only top padding */;
+    }
+    
     .features-card {
         padding: 1rem;
+        margin: 0; /* Remove margin, keep only top padding */
+        border-radius: 12px; /* Smaller border radius for small mobile */
     }
     
     .features-title {

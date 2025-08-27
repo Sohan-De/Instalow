@@ -195,6 +195,40 @@
     <script src="supabase-config.js"></script>
     <script src="partners-dynamic.js"></script>
     
+    <style>
+        /* Mobile responsive styles for partners section */
+        @media (max-width: 768px) {
+            .partners-section {
+                padding: 120px 1rem 3rem !important; /* Increased top padding for mobile */
+                min-height: auto !important;
+            }
+            
+            .partner-details-cards {
+                margin-top: 2rem !important;
+                gap: 1.5rem !important;
+            }
+            
+            .partner-card {
+                padding: 1.5rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .partners-section {
+                padding: 140px 0.5rem 2rem !important; /* Even more top padding for small mobile */
+            }
+            
+            .partner-details-cards {
+                margin-top: 1.5rem !important;
+                gap: 1rem !important;
+            }
+            
+            .partner-card {
+                padding: 1rem !important;
+            }
+        }
+    </style>
+    
     <script>
         // Scroll to top function for logo click
         function scrollToTop() {

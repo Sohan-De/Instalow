@@ -3454,7 +3454,7 @@ function displayKeys(keys) {
                 <td>
                     <div class="plan-info">
                         <span class="plan-badge plan-${key.plan_id}">
-                            ${key.subscription_plans?.name || 'Unknown Plan'}
+                            ${(key.subscription_plans?.name || 'Unknown Plan').replace(' Plan', '')}
                         </span>
                         <small class="plan-type">${key.subscription_plans?.plan_type || 'N/A'}</small>
                     </div>
