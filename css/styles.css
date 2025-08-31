@@ -7819,8 +7819,6 @@ body.mobile-menu-open {
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    min-height: 200px; /* Debug height */
 }
 
 .hero-img {
@@ -7828,7 +7826,6 @@ body.mobile-menu-open {
     height: auto;
     transition: all 0.3s ease;
     animation: heroImageFloat 6s ease-in-out infinite;
-   
 }
 
 
